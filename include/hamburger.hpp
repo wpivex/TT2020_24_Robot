@@ -12,12 +12,20 @@ using namespace okapi;
 #define DRIVE_RIGHT_MID_BACK 7
 #define DRIVE_RIGHT_BACK 8
 
+#define INTAKE_LEFT 10
+#define INTAKE_RIGHT 11
+
 
 class Hamburger {
 	private:
 		static Hamburger* robot;
+		std::shared_ptr<MotorGroup> intake;
 		Hamburger();
 	public:
 		static Hamburger* getRobot();
-		Drive drive;
+		std::shared_ptr<Drive> drive;
+		void opControlIntake(pros::Controller& joystick);
+		void opControl(pros::Controller& joystick);
+		void runIntake(int power);
+		void opControlIntake(int power);
 };
