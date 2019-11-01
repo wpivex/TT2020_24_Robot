@@ -30,6 +30,7 @@ void Hamburger::opControl(pros::Controller &joystick) {
 	opControlIntake(joystick);
 }
 
+
 void Hamburger::runIntake(int power) {
 	intake->moveVelocity(power);
 }

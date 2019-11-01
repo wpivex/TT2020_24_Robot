@@ -27,5 +27,4 @@ class Hamburger {
 		void opControlIntake(pros::Controller& joystick);
 		void opControl(pros::Controller& joystick);
 		void runIntake(int power);
-		void opControlIntake(int power);
 };
