@@ -6,14 +6,16 @@ using namespace okapi;
 #define DRIVE_LEFT_FRONT 1
 #define DRIVE_LEFT_MID_FRONT 2
 #define DRIVE_LEFT_MID_BACK 3
-#define DRIVE_LEFT_BACK 4
-#define DRIVE_RIGHT_FRONT 5
-#define DRIVE_RIGHT_MID_FRONT 6
-#define DRIVE_RIGHT_MID_BACK 7
-#define DRIVE_RIGHT_BACK 8
+#define DRIVE_LEFT_BACK 4 //REV
+#define DRIVE_RIGHT_FRONT 6 //REV
+#define DRIVE_RIGHT_MID_FRONT 7
+#define DRIVE_RIGHT_MID_BACK 8
+#define DRIVE_RIGHT_BACK 9
 
-#define INTAKE_LEFT 10
-#define INTAKE_RIGHT 11
+#define INTAKE_LEFT 19
+#define INTAKE_RIGHT 20
+
+#define FOURBAR 
 
 
 class Hamburger {
