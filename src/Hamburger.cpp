@@ -9,24 +9,28 @@ Hamburger *Hamburger::getRobot() {
 }
 
 Hamburger::Hamburger() {
-	MotorGroup left({Motor(DRIVE_LEFT_FRONT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-					 Motor(DRIVE_LEFT_MID_FRONT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-					 Motor(DRIVE_LEFT_MID_BACK, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-					 Motor(DRIVE_LEFT_BACK, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
-	MotorGroup right({Motor(DRIVE_RIGHT_FRONT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-					  Motor(DRIVE_RIGHT_MID_FRONT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-					  Motor(DRIVE_RIGHT_MID_BACK, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-					  Motor(DRIVE_RIGHT_BACK, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+	MotorGroup left({Motor(DRIVE_LEFT_FRONT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+					 Motor(DRIVE_LEFT_MID_FRONT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+					 Motor(DRIVE_LEFT_MID_BACK, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+					 Motor(DRIVE_LEFT_BACK, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+	MotorGroup right({Motor(DRIVE_RIGHT_FRONT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+					  Motor(DRIVE_RIGHT_MID_FRONT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+					  Motor(DRIVE_RIGHT_MID_BACK, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+					  Motor(DRIVE_RIGHT_BACK, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
 	drive = std::make_shared<Drive>(left, right);
 
 	MotorGroup intakeMotors({Motor(INTAKE_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
 							 Motor(INTAKE_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
 	intakeMotors.setBrakeMode(AbstractMotor::brakeMode::brake);
 	intake = std::make_shared<MotorGroup>(intakeMotors);
+	
+	MotorGroup fourbarMotors({Motor(FOURBAR, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+	fourbar = std::make_shared<MotorGroup>(fourbarMotors);
 }
 
 void Hamburger::opControl(pros::Controller &joystick) {
 	drive->run(joystick);
+	opControlFourbar(joystick);
 	opControlIntake(joystick);
 }
 
@@ -45,4 +49,18 @@ void Hamburger::opControlIntake(pros::Controller &joystick) {
 	else {
 		runIntake(0);
 	}
+}
+
+void Hamburger::opControlFourbar(pros::Controller& joystick) {
+	if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
+		moveFourbar(100);
+	} else if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+		moveFourbar(-100);
+	} else {
+		moveFourbar(0);
+	}
+}
+
+void Hamburger::moveFourbar(int power) {
+	fourbar->moveVelocity(power);
 }
