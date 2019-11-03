@@ -3,19 +3,19 @@
 #include "drive.hpp"
 using namespace okapi;
 
-#define DRIVE_LEFT_FRONT 1 //Rev
+#define DRIVE_LEFT_FRONT 4 //Rev
 #define DRIVE_LEFT_MID_FRONT 2
 #define DRIVE_LEFT_MID_BACK 3
-#define DRIVE_LEFT_BACK 4
-#define DRIVE_RIGHT_FRONT 6 //REV
+#define DRIVE_LEFT_BACK 1
+#define DRIVE_RIGHT_FRONT 9 //REV
 #define DRIVE_RIGHT_MID_FRONT 7
 #define DRIVE_RIGHT_MID_BACK 8
-#define DRIVE_RIGHT_BACK 9
+#define DRIVE_RIGHT_BACK 6
 
 #define INTAKE_LEFT 19
 #define INTAKE_RIGHT 20
 
-#define FOURBAR 
+#define FOURBAR
 
 
 class Hamburger {
@@ -29,5 +29,4 @@ class Hamburger {
 		void opControlIntake(pros::Controller& joystick);
 		void opControl(pros::Controller& joystick);
 		void runIntake(int power);
-		void opControlIntake(int power);
 };
