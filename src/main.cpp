@@ -59,7 +59,17 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	auto robot = Hamburger::getRobot();
+	robot->runIntake(200);
+	robot->drive->chassis->getModel()->setMaxVelocity(100);
+	
+	robot->drive->chassis->moveDistance(36_in);
+	robot->drive->chassis->turnAngle(135_deg);
+	robot->drive->chassis->moveDistance(12_in);
+
+	pros::delay(5)
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
