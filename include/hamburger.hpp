@@ -1,6 +1,7 @@
 #pragma once
 #include "main.h"
 #include "drive.hpp"
+#include "brainDriver.hpp"
 using namespace okapi;
 
 #define DRIVE_LEFT_FRONT 4
@@ -27,6 +28,7 @@ class Hamburger {
 	public:
 		static Hamburger* getRobot();
 		std::shared_ptr<Drive> drive;
+		std::shared_ptr<BrainDriver> brainDriver;
 		void opControlIntake(pros::Controller& joystick);
 		void opControlFourbar(pros::Controller& joystick);
 		void opControl(pros::Controller& joystick);

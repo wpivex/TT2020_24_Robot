@@ -26,6 +26,8 @@ Hamburger::Hamburger() {
 	
 	MotorGroup fourbarMotors({Motor(FOURBAR, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
 	fourbar = std::make_shared<MotorGroup>(fourbarMotors);
+
+	// brainDriver = std::make_shared<BrainDriver>(BrainDriver());
 }
 
 void Hamburger::opControl(pros::Controller &joystick) {
