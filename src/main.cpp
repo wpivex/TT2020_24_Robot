@@ -61,14 +61,18 @@ void competition_initialize() {}
  */
 void autonomous() {
 	auto robot = Hamburger::getRobot();
-	robot->runIntake(200);
-	robot->drive->chassis->getModel()->setMaxVelocity(100);
+	robot->runIntake(100);
+	robot->drive->chassis->getModel()->setMaxVelocity(110);
 	
 	robot->drive->chassis->moveDistance(36_in);
-	robot->drive->chassis->turnAngle(135_deg);
-	robot->drive->chassis->moveDistance(12_in);
+	pros::delay(100);
+	robot->drive->chassis->turnAngle(45_deg);
+	robot->runIntake(200);
+	robot->drive->chassis->moveDistance(20_in);
+	pros::delay(2000);
 
-	pros::delay(5)
+	robot->drive->chassis->moveDistance(-40_in);
+	robot->runIntake(0);
 }
 
 /**

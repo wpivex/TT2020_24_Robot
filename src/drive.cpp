@@ -19,5 +19,6 @@ Drive::Drive(okapi::MotorGroup leftMotors, okapi::MotorGroup rightMotors) {
 void Drive::run(pros::Controller& joystick) {
     double forward = (double)(joystick.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127;
     double turn = (double)(joystick.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127;
+    double forward2 = (double)(joystick.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127;
     this->chassis->model().arcade(forward, turn);
 }

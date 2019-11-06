@@ -25,6 +25,8 @@ class Hamburger {
 		std::shared_ptr<MotorGroup> intake;
 		std::shared_ptr<MotorGroup> fourbar;
 		Hamburger();
+		int lastUp = 0;
+		int lastDown = 0;
 	public:
 		static Hamburger* getRobot();
 		std::shared_ptr<Drive> drive;
@@ -34,4 +36,6 @@ class Hamburger {
 		void opControl(pros::Controller& joystick);
 		void runIntake(int power);
 		void moveFourbar(int power);
+		void tiltFourbarScore();
+		void tiltFourbarRetract();
 };

@@ -54,9 +54,9 @@ void Hamburger::opControlIntake(pros::Controller &joystick) {
 }
 
 void Hamburger::opControlFourbar(pros::Controller& joystick) {
-	if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
+	if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
 		moveFourbar(100);
-	} else if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+	} else if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
 		moveFourbar(-100);
 	} else {
 		moveFourbar(0);
@@ -65,4 +65,14 @@ void Hamburger::opControlFourbar(pros::Controller& joystick) {
 
 void Hamburger::moveFourbar(int power) {
 	fourbar->moveVelocity(power);
+}
+
+void Hamburger::tiltFourbarScore() {
+	fourbar->tarePosition();
+	fourbar->moveRelative(1840,100);
+}
+
+void Hamburger::tiltFourbarRetract() {
+	fourbar->tarePosition();
+	fourbar->moveRelative(-1840,100);
 }
