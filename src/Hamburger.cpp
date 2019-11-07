@@ -23,7 +23,7 @@ Hamburger::Hamburger() {
 							 Motor(INTAKE_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
 	intakeMotors.setBrakeMode(AbstractMotor::brakeMode::brake);
 	intake = std::make_shared<MotorGroup>(intakeMotors);
-	
+
 	MotorGroup fourbarMotors({Motor(FOURBAR, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
 	fourbar = std::make_shared<MotorGroup>(fourbarMotors);
 
@@ -54,9 +54,9 @@ void Hamburger::opControlIntake(pros::Controller &joystick) {
 }
 
 void Hamburger::opControlFourbar(pros::Controller& joystick) {
-	if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+	if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
 		moveFourbar(100);
-	} else if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+	} else if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
 		moveFourbar(-100);
 	} else {
 		moveFourbar(0);
