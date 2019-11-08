@@ -18,6 +18,11 @@ using namespace okapi;
 
 #define FOURBAR 18
 
+#define ENCODER_LEFT_DRIVE_TOP 1
+#define ENCODER_LEFT_DRIVE_BOT 2
+#define ENCODER_RIGHT_DRIVE_TOP 3
+#define ENCODER_RIGHT_DRIVE_BOT 4
+
 
 class Hamburger {
 	private:
