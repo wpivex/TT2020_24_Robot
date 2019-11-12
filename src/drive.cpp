@@ -36,5 +36,10 @@ void Drive::run(pros::Controller& joystick) {
     double forward = (double)(joystick.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127;
     double turn = (double)(joystick.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127;
     double forward2 = (double)(joystick.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127;
+    // Double stick
     this->chassis->model().arcade(forward, turn);
+    // single stick
+    // this->chassis->model().arcade(forward2, turn);
+    // Tank
+    // this->chassis->model().tank(forward, forward2);
 }
