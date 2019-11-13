@@ -16,7 +16,9 @@ Hamburger::Hamburger() {
 	intakeMotors.setBrakeMode(AbstractMotor::brakeMode::brake);
 	intake = std::make_shared<MotorGroup>(intakeMotors);
 
-	MotorGroup fourbarMotors({Motor(FOURBAR, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees)});
+	MotorGroup fourbarMotors({Motor(FOURBAR, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
+							Motor(FOURBAR2, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
+	});
 	fourbar = std::make_shared<MotorGroup>(fourbarMotors);
 
 	// brainDriver = std::make_shared<BrainDriver>(BrainDriver());
@@ -62,19 +64,23 @@ void Hamburger::opControlFourbar(pros::Controller& joystick) {
 }
 
 void Hamburger::moveFourbar(int power) {
-	if(fourbar->getPosition() > fourbarThreshold) {
-		fourbar->moveVelocity(power * 0.5);
+	// if going up, throttle the value
+	if(power > 0) {
+		double numerator = fourbarUpValue - fourbar->getPosition();
+		double ratio = (double)(abs(numerator) + 10) / fourbarUpValue;
+		fourbar->moveVelocity(power * ratio);
 	} else {
+		// full speed down
 		fourbar->moveVelocity(power);
 	}
 }
 
 void Hamburger::tiltFourbarScore() {
 	fourbar->tarePosition();
-	fourbar->moveRelative(920,100);
+	fourbar->moveRelative(fourbarUpValue,100);
 }
 
 void Hamburger::tiltFourbarRetract() {
 	// fourbar->tarePosition();
-	fourbar->moveRelative(50,100);
+	fourbar->moveRelative(fourbarUpValue,100);
 }

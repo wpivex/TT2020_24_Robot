@@ -17,6 +17,7 @@ using namespace okapi;
 #define INTAKE_RIGHT 19
 
 #define FOURBAR 18
+#define FOURBAR2 17
 
 #define ENCODER_LEFT_DRIVE_TOP 1
 #define ENCODER_LEFT_DRIVE_BOT 2
@@ -32,7 +33,8 @@ class Hamburger {
 		Hamburger();
 		int lastUp = 0;
 		int lastDown = 0;
-		double fourbarThreshold = 700;
+		double fourbarThreshold = 500;
+		double fourbarUpValue = 930;
 	public:
 		static Hamburger* getRobot();
 		std::shared_ptr<Drive> drive;
