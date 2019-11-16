@@ -27,7 +27,7 @@ Drive::Drive() {
                     {0.001, 0, 0.0001}, // Turn controller gains
                     {0.001, 0, 0.0001}  // Angle controller gains (helps drive straight)
                 )
-                // .withSensors(leftEncoder, rightEncoder)
+                .withSensors(leftEncoder, rightEncoder)
                 .withOdometry(StateMode::CARTESIAN, 0_mm, 0_deg, 0.0001_mps)
                 .buildOdometry();
 }

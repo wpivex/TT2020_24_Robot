@@ -19,10 +19,10 @@ using namespace okapi;
 #define FOURBAR 18
 #define FOURBAR2 17
 
-#define ENCODER_LEFT_DRIVE_TOP 1
-#define ENCODER_LEFT_DRIVE_BOT 2
-#define ENCODER_RIGHT_DRIVE_TOP 3
-#define ENCODER_RIGHT_DRIVE_BOT 4
+#define ENCODER_LEFT_DRIVE_TOP 'a'
+#define ENCODER_LEFT_DRIVE_BOT 'b'
+#define ENCODER_RIGHT_DRIVE_TOP 'c'
+#define ENCODER_RIGHT_DRIVE_BOT 'd'
 
 
 class Hamburger {

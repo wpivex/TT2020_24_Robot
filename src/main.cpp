@@ -62,6 +62,7 @@ void competition_initialize() {}
 void autonomous() {
 	auto robot = Hamburger::getRobot();
 	robot->drive->chassis->driveToPoint({24_in,24_in});
+	robot->drive->chassis->stop();
 	// robot->runIntake(100);
 	// robot->drive->chassis->getModel()->setMaxVelocity(55);
 
@@ -114,12 +115,15 @@ void autonomous() {
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	auto robot = Hamburger::getRobot();
-	ADIEncoder enc('a','b');
-	enc.reset();
+	// ADIEncoder encL(ENCODER_LEFT_DRIVE_TOP,ENCODER_LEFT_DRIVE_BOT,false);
+	// ADIEncoder encR(ENCODER_RIGHT_DRIVE_TOP,ENCODER_RIGHT_DRIVE_BOT,true);
+	// encL.reset();
+	// encR.reset();
 
 	while (true) {
 		robot->opControl(master);
-		pros::lcd::set_text(1, "Left Enc: " + std::to_string(enc.get()));
+		// pros::lcd::set_text(1, "Left Enc: " + std::to_string(encL.get()));
+		// pros::lcd::set_text(2, "Right Enc: " + std::to_string(encR.get()));
 		pros::delay(20);
 	}
 }
