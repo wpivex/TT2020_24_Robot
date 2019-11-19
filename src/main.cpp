@@ -61,8 +61,10 @@ void competition_initialize() {}
  */
 void autonomous() {
 	auto robot = Hamburger::getRobot();
-	robot->drive->chassis->driveToPoint({24_in,24_in});
-	robot->drive->chassis->stop();
+	robot->drive->chassis->moveDistance(24_in);
+	// robot->drive->chassis->driveToPoint({24_in,24_in});
+	// robot->drive->chassis->stop();
+
 	// robot->runIntake(100);
 	// robot->drive->chassis->getModel()->setMaxVelocity(55);
 
@@ -122,8 +124,9 @@ void opcontrol() {
 
 	while (true) {
 		robot->opControl(master);
-		// pros::lcd::set_text(1, "Left Enc: " + std::to_string(encL.get()));
-		// pros::lcd::set_text(2, "Right Enc: " + std::to_string(encR.get()));
+		std::valarray<std::int32_t> vals = robot->drive->chassis->getModel()->getSensorVals();
+		pros::lcd::set_text(1, "Left Enc: " + std::to_string(vals[0]));
+		pros::lcd::set_text(2, "Right Enc: " + std::to_string(vals[1]));
 		pros::delay(20);
 	}
 }

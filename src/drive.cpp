@@ -16,12 +16,12 @@ Drive::Drive() {
     rightMotors->setBrakeMode(AbstractMotor::brakeMode::coast);
 
     ADIEncoder leftEncoder = ADIEncoder(ENCODER_LEFT_DRIVE_TOP, ENCODER_LEFT_DRIVE_BOT, false);
-    ADIEncoder rightEncoder = ADIEncoder(ENCODER_LEFT_DRIVE_TOP, ENCODER_LEFT_DRIVE_BOT, true);
+    ADIEncoder rightEncoder = ADIEncoder(ENCODER_RIGHT_DRIVE_TOP, ENCODER_RIGHT_DRIVE_BOT, true);
 
     chassis = ChassisControllerBuilder()
                 .withMotors(leftMotors, rightMotors)
                 .withGearset(AbstractMotor::gearset::green)
-                .withDimensions({{3.25_in, 13.5_in},imev5GreenTPR})
+                .withDimensions({{3.25_in, 13.5_in},1024})
                 .withGains(
                     {0.001, 0, 0.0001}, // Distance controller gains
                     {0.001, 0, 0.0001}, // Turn controller gains

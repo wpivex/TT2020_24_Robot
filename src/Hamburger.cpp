@@ -66,8 +66,8 @@ void Hamburger::opControlFourbar(pros::Controller& joystick) {
 void Hamburger::moveFourbar(int power) {
 	// if going up, throttle the value
 	if(power > 0) {
-		double numerator = fourbarUpValue - fourbar->getPosition();
-		double ratio = (double)(abs(numerator) + 10) / fourbarUpValue;
+		double numerator = fourbarUpValue - fourbar->getPosition() * 2 / 3;
+		double ratio = (double)(abs(numerator)) / fourbarUpValue;
 		fourbar->moveVelocity(power * ratio);
 	} else {
 		// full speed down
