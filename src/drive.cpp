@@ -32,7 +32,7 @@ Drive::Drive() {
                 .buildOdometry();
 }
 
-void Drive::run(pros::Controller& joystick) {
+void Drive::opControlDrive(pros::Controller& joystick) {
     double forward = (double)(joystick.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127;
     double turn = (double)(joystick.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) / 127;
     double forward2 = (double)(joystick.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127;

@@ -25,7 +25,7 @@ Hamburger::Hamburger() {
 }
 
 void Hamburger::opControl(pros::Controller &joystick) {
-	drive->run(joystick);
+	drive->opControlDrive(joystick);
 	opControlFourbar(joystick);
 	opControlIntake(joystick);
 }
