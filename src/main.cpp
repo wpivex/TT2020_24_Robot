@@ -61,6 +61,7 @@ void competition_initialize() {}
  */
 void autonomous() {
 	auto robot = Hamburger::getRobot();
+	robot->drive->chassis->getModel()->setMaxVelocity(140);
 	robot->drive->chassis->moveDistance(24_in);
 	// robot->drive->chassis->driveToPoint({24_in,24_in});
 	// robot->drive->chassis->stop();
