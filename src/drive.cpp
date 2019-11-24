@@ -28,9 +28,9 @@ Drive::Drive() {
                     {0.000, 0, 0.0000}  // Angle controller gains (helps drive straight)
                 )
                 .withSensors(leftEncoder, rightEncoder)
-                // .withClosedLoopControllerTimeUtil(100000, 1000)
-                .withOdometry(StateMode::CARTESIAN, 0_mm, 0_deg, 0.0001_mps)
-                .buildOdometry();
+                .withClosedLoopControllerTimeUtil(10000, 10000, 10_ms)
+                // .withOdometry(StateMode::CARTESIAN, 1_in, 5_deg, 0.0001_mps)
+                .build();
 }
 
 void Drive::opControlDrive(pros::Controller& joystick) {
