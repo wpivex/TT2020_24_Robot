@@ -23,12 +23,13 @@ Drive::Drive() {
                 .withGearset(AbstractMotor::gearset::green)
                 .withDimensions({{3.25_in, 13.5_in},1024})
                 .withGains(
+                    // {0.0015, 0, 0.000005}, // Distance controller gains
                     {0.0015, 0, 0.000005}, // Distance controller gains
-                    {0.001, 0, 0.0001}, // Turn controller gains
-                    {0.000, 0, 0.0000}  // Angle controller gains (helps drive straight)
+                    {0.0015, 0, 0.000005}, // turn controller gains
+                    {0.000, 0, 0.00000}  // angle controller gains (helps drive straight)
                 )
                 .withSensors(leftEncoder, rightEncoder)
-                .withClosedLoopControllerTimeUtil(10000, 10000, 10_ms)
+                .withClosedLoopControllerTimeUtil(50, 5, 250_ms)
                 // .withOdometry(StateMode::CARTESIAN, 1_in, 5_deg, 0.0001_mps)
                 .build();
 }
