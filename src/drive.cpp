@@ -26,7 +26,7 @@ Drive::Drive() {
                     // {0.0015, 0, 0.000005}, // Distance controller gains
                     {0.0015, 0, 0.000005}, // Distance controller gains
                     {0.0015, 0, 0.000005}, // turn controller gains
-                    {0.000, 0, 0.00000}  // angle controller gains (helps drive straight)
+                    {0.0005, 0, 0.00000}  // angle controller gains (helps drive straight)
                 )
                 .withSensors(leftEncoder, rightEncoder)
                 .withClosedLoopControllerTimeUtil(50, 5, 250_ms)

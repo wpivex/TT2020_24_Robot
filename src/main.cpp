@@ -63,7 +63,7 @@ void autonomous() {
 	auto robot = Hamburger::getRobot();
 	robot->drive->chassis->getModel()->setMaxVelocity(140);
 	robot->drive->chassis->moveDistance(24_in);
-	robot->drive->chassis->turnAngle(90_deg);
+	// robot->drive->chassis->turnAngle(90_deg);
 	// pros::lcd::set_text(1, "I am going to drive to 12, 12");
 	// robot->drive->chassis->driveToPoint({12_in,12_in});
 	// pros::lcd::set_text(1, "I am going to drive to 24, 24");
