@@ -77,10 +77,10 @@ void Hamburger::moveFourbar(int power) {
 
 void Hamburger::tiltFourbarScore() {
 	fourbar->tarePosition();
-	fourbar->moveRelative(fourbarUpValue,100);
+	fourbar->moveRelative(fourbarUpValue,50);
 }
 
 void Hamburger::tiltFourbarRetract() {
 	// fourbar->tarePosition();
-	fourbar->moveRelative(fourbarUpValue,100);
+	fourbar->moveRelative(0,100);
 }

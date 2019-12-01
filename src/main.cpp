@@ -61,49 +61,85 @@ void competition_initialize() {}
  */
 void autonomous() {
 	auto robot = Hamburger::getRobot();
-	robot->drive->chassis->getModel()->setMaxVelocity(140);
-	robot->drive->chassis->moveDistance(24_in);
-	// robot->drive->chassis->turnAngle(90_deg);
-	// pros::lcd::set_text(1, "I am going to drive to 12, 12");
-	// robot->drive->chassis->driveToPoint({12_in,12_in});
-	// pros::lcd::set_text(1, "I am going to drive to 24, 24");
-	// robot->drive->chassis->driveToPoint({24_in,24_in});
-	// robot->drive->chassis->stop();
 
-	// robot->runIntake(100);
-	// robot->drive->chassis->getModel()->setMaxVelocity(55);
+	// get four at start
+	robot->drive->chassis->getModel()->setMaxVelocity(100);
+	robot->runIntake(140);
+	robot->drive->chassis->moveDistance(43_in);
+	// get stray cube
+	robot->drive->chassis->turnAngle(20_deg);
+	robot->drive->chassis->moveDistance(5_in);
+	pros::delay(500);
+	robot->drive->chassis->moveDistance(-5_in);
+	robot->drive->chassis->turnAngle(-20_deg);
+	// go to next stack
+	robot->drive->chassis->getModel()->setMaxVelocity(130);
+	robot->runIntake(40);
+	robot->drive->chassis->moveDistance(-32_in);
+	robot->drive->chassis->turnAngle(100_deg);
+	robot->runIntake(150);
+	robot->drive->chassis->moveDistance(23_in);
+	robot->drive->chassis->turnAngle(-100_deg);
+	// get stack of 3
+	robot->drive->chassis->getModel()->setMaxVelocity(100);
+	robot->runIntake(200);
+	robot->drive->chassis->moveDistance(34_in);
+	pros::delay(1000);
+	robot->drive->chassis->moveDistance(-5_in);
+	// go to goal
+	robot->drive->chassis->getModel()->setMaxVelocity(100);
+	robot->runIntake(40);
+	robot->drive->chassis->turnAngle(-145_deg);
+	robot->drive->chassis->moveDistance(35_in);
+	robot->runIntake(0);
+	robot->drive->chassis->getModel()->forward(30);
+	pros::delay(1000);
+	robot->drive->chassis->getModel()->stop();
+	// score
+	robot->runIntake(-100);
+	pros::delay(1000);
+	robot->tiltFourbarScore();
+	pros::delay(3000);
+	robot->runIntake(-50);
+	robot->drive->chassis->getModel()->forward(-50);
+	pros::delay(1000);
+	robot->drive->chassis->getModel()->stop();
 
-	// robot->drive->chassis->moveDistance(38_in);
-	// pros::delay(100);
 
-	// robot->drive->chassis->getModel()->setMaxVelocity(110);
-	// robot->drive->chassis->turnAngle(45_deg);
+	// TODO Write this with actual Odom methods
+	// drive to 4 stack
+	// robot->drive->chassis->getModel()->setMaxVelocity(100);
+	// robot->runIntake(140);
+	// robot->drive->chassis->driveToPoint({0_in, 40_in});
+	// robot->runIntake(50);
+	// // drive back and go to next group of 4
+	// robot->drive->chassis->getModel()->setMaxVelocity(200);
+	// robot->drive->chassis->turnToAngle(-30_deg);
+	// robot->drive->chassis->driveToPoint({0_in, 10_in},true);
+
+	
+	// robot->drive->chassis->turnToPoint({24_in, 10_in});
+	// robot->drive->chassis->driveToPoint({24_in, 10_in});
+	// robot->drive->chassis->turnToPoint({24_in, 38_in});
+	// // drive and pick up next group of 4
+	// robot->drive->chassis->getModel()->setMaxVelocity(140);
 	// robot->runIntake(200);
-	// robot->drive->chassis->getModel()->setMaxVelocity(60);
-	// robot->drive->chassis->moveDistance(20_in);
-	// pros::delay(2000);
+	// robot->drive->chassis->driveToPoint({24_in, 42_in});
+	
+	// // drive to goal
+	// robot->runIntake(50);
+	// robot->drive->chassis->getModel()->setMaxVelocity(140);
+	// robot->drive->chassis->turnToPoint({-5_in, 10_in});
+	// robot->drive->chassis->driveToPoint({-5_in, 10_in});
+	// robot->drive->chassis->getModel()->forward(80);
+	// pros::delay(1000);
 
-	// robot->drive->chassis->getModel()->setMaxVelocity(110);
-	// robot->drive->chassis->moveDistance(-30_in);
+	// // score
 	// robot->runIntake(0);
-
-	// robot->drive->chassis->turnAngle(125_deg);
-
-	// pros::delay(500);
-
-	// robot->drive->chassis->moveDistance(17_in);
-	// pros::delay(500);
-
 	// robot->tiltFourbarScore();
-
-	// pros::delay(5000);
-
-	// robot->runIntake(-50);
-	// pros::delay(250);
-	// robot->drive->chassis->moveDistance(-15_in);
-
-	// robot->tiltFourbarRetract();
-
+	// pros::delay(300);
+	// robot->runIntake(-40);
+	// robot->drive->chassis->moveDistance(-10_in);
 }
 
 /**
