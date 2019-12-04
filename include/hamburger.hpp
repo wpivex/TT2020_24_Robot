@@ -16,6 +16,8 @@ using namespace okapi;
 #define INTAKE_LEFT 20
 #define INTAKE_RIGHT 19
 
+#define TRAY_BRAKE 5
+
 #define FOURBAR 18
 #define FOURBAR2 17
 
@@ -30,17 +32,29 @@ class Hamburger {
 		static Hamburger* robot;
 		std::shared_ptr<MotorGroup> intake;
 		std::shared_ptr<MotorGroup> fourbar;
+		std::shared_ptr<MotorGroup> trayBrake;
 		Hamburger();
 		int lastUp = 0;
 		int lastDown = 0;
-		double fourbarThreshold = 500;
-		double fourbarUpValue = 930;
+		int trayBrakeOn = false;
+		const double fourbarThreshold = 500;
+		const double FOURBAR_UP_VALUE = 930;
+		const double FOURBAR_BRAKE_DISABLE_VALUE = 800;
+		const double FOURBAR_MARGIN_VALUE = 10;
+		const int FOURBAR_UP_MIN_VEL = 25;
+		const double FOURBAR_GAIN = 0.85;
+
+		const double BRAKE_ENABLE_VALUE = 180;
+		const double BRAKE_DISABLE_VALUE = 150;
+		const double BRAKE_MARGIN_VALUE = 5;
+		const double BRAKE_STALL_CURRENT = 2.50;
 	public:
 		static Hamburger* getRobot();
 		std::shared_ptr<Drive> drive;
 		std::shared_ptr<BrainDriver> brainDriver;
 		void opControlIntake(pros::Controller& joystick);
 		void opControlFourbar(pros::Controller& joystick);
+		void handleTrayBrake();
 		void opControl(pros::Controller& joystick);
 		void runIntake(int power);
 		void moveFourbar(int power);
