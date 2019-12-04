@@ -21,7 +21,7 @@ Hamburger::Hamburger() {
 	});
 	fourbar = std::make_shared<MotorGroup>(fourbarMotors);
 
-	MotorGroup brakeMotors({Motor(TRAY_BRAKE, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees)});
+	MotorGroup brakeMotors({Motor(TRAY_BRAKE, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees)});
 	trayBrake = std::make_shared<MotorGroup>(brakeMotors);
 
 	// brainDriver = std::make_shared<BrainDriver>(BrainDriver());
@@ -36,7 +36,7 @@ void Hamburger::opControl(pros::Controller &joystick) {
 	 * Enable brake when angle of tray reaches 90 degrees
 	 * Disable brake when angle of tray reaches below 80ish degrees
 	 */
-	handleTrayBrake();
+	handleTrayBrake(joystick);
 }
 
 
@@ -72,42 +72,37 @@ void Hamburger::opControlFourbar(pros::Controller& joystick) {
 	// moveFourbar(joystick.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y));
 }
 
-void Hamburger::handleTrayBrake() {
-	bool toggleBrake = false;
-
+void Hamburger::handleTrayBrake(pros::Controller& joystick) {
+	#ifndef DISABLE_PASSIVE_TRAY
+	
 	// Toggle brake if the upward position is reached and the brake is off
 	if (abs(fourbar->getPosition() - FOURBAR_UP_VALUE) < FOURBAR_MARGIN_VALUE
 		  && !trayBrakeOn) {
-		toggleBrake = true;
+		trayBrakeOn = true;
+		trayBrakeSetpoint = BRAKE_ENABLE_VALUE;
 	}
 	// Toggle brake if the disable position is reached and the brake is on
 	else if (abs(fourbar->getPosition() - FOURBAR_BRAKE_DISABLE_VALUE) < FOURBAR_MARGIN_VALUE
 					 && trayBrakeOn) {
-		toggleBrake = true;
+		trayBrakeOn = false;
+		trayBrakeSetpoint = BRAKE_DISABLE_VALUE;
 	}
 
-	if(toggleBrake) {
-		if(trayBrakeOn) {
-			// Brake is disabled once it reaches the disabled position within a margin
-			if(abs(trayBrake->getPosition() - BRAKE_DISABLE_VALUE) < BRAKE_MARGIN_VALUE) {
-				trayBrakeOn = false;
-				trayBrake->moveVelocity(0);
-			} else {
-				trayBrake->moveVelocity(-20);
-			}
-		}
-		else {
-			// Brake is enabled once it reaches the enabled position within a margin
-			if(abs(trayBrake->getPosition() - BRAKE_ENABLE_VALUE) < BRAKE_MARGIN_VALUE) {
-				trayBrakeOn = true;
-				trayBrake->moveVelocity(0);
-			} else {
-				trayBrake->moveVelocity(20);
-			}
-		}
-	} else {
-		trayBrake->moveVelocity(0);
+	if(trayBrake->getCurrentDraw() >= BRAKE_STALL_CURRENT) {
+		trayBrakeSetpoint = trayBrake->getPosition();
 	}
+
+	trayBrake->moveAbsolute(trayBrakeSetpoint, BRAKE_MAX_SPEED);
+
+	#else
+
+	if(joystick.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
+		trayBrake->moveAbsolute(BRAKE_ENABLE_VALUE, BRAKE_MAX_SPEED);
+	} else if(joystick.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+		trayBrake->moveAbsolute(BRAKE_DISABLE_VALUE, BRAKE_MAX_SPEED);
+	}
+
+	#endif
 }
 
 void Hamburger::moveFourbar(int power) {
