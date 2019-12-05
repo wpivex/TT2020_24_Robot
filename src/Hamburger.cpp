@@ -13,7 +13,7 @@ Hamburger::Hamburger() {
 
 	MotorGroup intakeMotors({Motor(INTAKE_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
 							 Motor(INTAKE_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
-	intakeMotors.setBrakeMode(AbstractMotor::brakeMode::brake);
+	intakeMotors.setBrakeMode(AbstractMotor::brakeMode::hold);
 	intake = std::make_shared<MotorGroup>(intakeMotors);
 
 	MotorGroup fourbarMotors({Motor(FOURBAR, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
@@ -66,7 +66,7 @@ void Hamburger::opControlFourbar(pros::Controller& joystick) {
 void Hamburger::moveFourbar(int power) {
 	// if going up, throttle the value
 	if(power > 0) {
-		double numerator = fourbarUpValue - fourbar->getPosition() * 2 / 3;
+		double numerator = fourbarUpValue - fourbar->getPosition() * 3 / 4;
 		double ratio = (double)(abs(numerator)) / fourbarUpValue;
 		fourbar->moveVelocity(power * ratio);
 	} else {
@@ -82,5 +82,5 @@ void Hamburger::tiltFourbarScore() {
 
 void Hamburger::tiltFourbarRetract() {
 	// fourbar->tarePosition();
-	fourbar->moveRelative(0,100);
+	fourbar->moveAbsolute(0,100);
 }

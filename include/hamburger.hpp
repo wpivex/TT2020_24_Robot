@@ -34,7 +34,7 @@ class Hamburger {
 		int lastUp = 0;
 		int lastDown = 0;
 		double fourbarThreshold = 500;
-		double fourbarUpValue = 930;
+		double fourbarUpValue = 1050;
 	public:
 		static Hamburger* getRobot();
 		std::shared_ptr<Drive> drive;

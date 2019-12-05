@@ -69,19 +69,22 @@ void autonomous() {
 	// get stray cube
 	robot->drive->chassis->turnAngle(20_deg);
 	robot->drive->chassis->moveDistance(5_in);
-	pros::delay(500);
+	pros::delay(200);
 	robot->drive->chassis->moveDistance(-5_in);
 	robot->drive->chassis->turnAngle(-20_deg);
 	// go to next stack
 	robot->drive->chassis->getModel()->setMaxVelocity(130);
 	robot->runIntake(40);
-	robot->drive->chassis->moveDistance(-32_in);
+	robot->drive->chassis->moveDistance(-30_in);
 	robot->drive->chassis->turnAngle(100_deg);
-	robot->runIntake(150);
-	robot->drive->chassis->moveDistance(23_in);
-	robot->drive->chassis->turnAngle(-100_deg);
-	// get stack of 3
 	robot->drive->chassis->getModel()->setMaxVelocity(100);
+	robot->runIntake(200);
+	robot->drive->chassis->moveDistance(21_in);
+	robot->drive->chassis->turnAngle(-30_deg);
+	robot->drive->chassis->moveDistance(2_in);
+	robot->drive->chassis->turnAngle(-70_deg);
+	// get stack of 3
+	robot->drive->chassis->getModel()->setMaxVelocity(80);
 	robot->runIntake(200);
 	robot->drive->chassis->moveDistance(34_in);
 	pros::delay(1000);
@@ -89,20 +92,23 @@ void autonomous() {
 	// go to goal
 	robot->drive->chassis->getModel()->setMaxVelocity(100);
 	robot->runIntake(40);
-	robot->drive->chassis->turnAngle(-145_deg);
-	robot->drive->chassis->moveDistance(35_in);
+	robot->drive->chassis->turnAngle(-151_deg);
+	robot->drive->chassis->moveDistance(34_in);
 	robot->runIntake(0);
 	robot->drive->chassis->getModel()->forward(30);
 	pros::delay(1000);
 	robot->drive->chassis->getModel()->stop();
 	// score
 	robot->runIntake(-100);
-	pros::delay(1000);
+	pros::delay(500);
+	robot->runIntake(0);
+	pros::delay(500);
 	robot->tiltFourbarScore();
-	pros::delay(3000);
+	pros::delay(5000);
 	robot->runIntake(-50);
 	robot->drive->chassis->getModel()->forward(-50);
 	pros::delay(1000);
+	robot->tiltFourbarRetract();
 	robot->drive->chassis->getModel()->stop();
 
 
