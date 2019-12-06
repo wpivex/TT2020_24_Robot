@@ -13,7 +13,7 @@ Hamburger::Hamburger() {
 
 	MotorGroup intakeMotors({Motor(INTAKE_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
 							 Motor(INTAKE_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
-	intakeMotors.setBrakeMode(AbstractMotor::brakeMode::brake);
+	intakeMotors.setBrakeMode(AbstractMotor::brakeMode::hold);
 	intake = std::make_shared<MotorGroup>(intakeMotors);
 
 	MotorGroup fourbarMotors({Motor(FOURBAR, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
@@ -74,7 +74,7 @@ void Hamburger::opControlFourbar(pros::Controller& joystick) {
 
 void Hamburger::handleTrayBrake(pros::Controller& joystick) {
 	#ifndef DISABLE_PASSIVE_TRAY
-	
+
 	// Toggle brake if the upward position is reached and the brake is off
 	if (abs(fourbar->getPosition() - FOURBAR_UP_VALUE) < FOURBAR_MARGIN_VALUE
 		  && !trayBrakeOn) {
@@ -108,14 +108,9 @@ void Hamburger::handleTrayBrake(pros::Controller& joystick) {
 void Hamburger::moveFourbar(int power) {
 	// if going up, throttle the value
 	if(power > 0) {
-		double numerator = (FOURBAR_UP_VALUE - fourbar->getPosition()) * FOURBAR_GAIN;
+		double numerator = FOURBAR_UP_VALUE - fourbar->getPosition() * FOURBAR_GAIN;
 		double ratio = (double)(abs(numerator)) / FOURBAR_UP_VALUE;
-		int16_t velocity = power * ratio;
-
-		if(velocity < FOURBAR_UP_MIN_VEL) {
-			velocity = FOURBAR_UP_MIN_VEL;
-		}
-		fourbar->moveVelocity(velocity);
+		fourbar->moveVelocity(power * ratio);
 	} else {
 		// full speed down
 		fourbar->moveVelocity(power);
@@ -129,5 +124,5 @@ void Hamburger::tiltFourbarScore() {
 
 void Hamburger::tiltFourbarRetract() {
 	// fourbar->tarePosition();
-	fourbar->moveRelative(0,100);
+	fourbar->moveAbsolute(0,100);
 }
