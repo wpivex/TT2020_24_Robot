@@ -50,18 +50,18 @@ class Hamburger {
 		const int FOURBAR_UP_MIN_VEL = 25;
 		const double FOURBAR_GAIN = 0.75;
 
-		const double BRAKE_MAX_SPEED = 50;
-		const double BRAKE_ENABLE_VALUE = 180;
-		const double BRAKE_DISABLE_VALUE = 150;
+		const double BRAKE_MAX_SPEED = 75;
+		const double BRAKE_ENABLE_VALUE = 190;
+		const double BRAKE_DISABLE_VALUE = 120;
 		const double BRAKE_MARGIN_VALUE = 5;
-		const double BRAKE_STALL_CURRENT = 2.50;
+		const double BRAKE_STALL_CURRENT = 4.00;
 	public:
 		static Hamburger* getRobot();
 		std::shared_ptr<Drive> drive;
 		std::shared_ptr<BrainDriver> brainDriver;
 		void opControlIntake(pros::Controller& joystick);
 		void opControlFourbar(pros::Controller& joystick);
-		void handleTrayBrake(pros::Controller& joystick);
+		void opControlTrayBrake(pros::Controller& joystick);
 		void opControl(pros::Controller& joystick);
 		void runIntake(int power);
 		void moveFourbar(int power);
