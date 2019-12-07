@@ -117,13 +117,18 @@ void Hamburger::opControlTrayBrake(pros::Controller& joystick) {
 void Hamburger::moveFourbar(int power) {
 	// if going up, throttle the value
 	if(power > 0) {
-		double numerator = (FOURBAR_UP_VALUE - fourbar->getPosition()) * FOURBAR_GAIN;
+		double fourbarPos = fourbar->getPosition();
+		double numerator = (FOURBAR_UP_VALUE - fourbarPos) * FOURBAR_GAIN;
 		double ratio = (double)(abs(numerator)) / FOURBAR_UP_VALUE;
 		int velocity = power * ratio;
 
-		if(velocity < FOURBAR_UP_MIN_VEL) {
+		if(fourbarPos >= FOURBAR_UP_VALUE) {
+			velocity = 0.0;
+		}
+		else if(velocity < FOURBAR_UP_MIN_VEL) {
 			velocity = FOURBAR_UP_MIN_VEL;
 		}
+
 		fourbar->moveVelocity(velocity);
 
 	} else {
@@ -134,10 +139,32 @@ void Hamburger::moveFourbar(int power) {
 
 void Hamburger::tiltFourbarScore() {
 	fourbar->tarePosition();
-	fourbar->moveRelative(FOURBAR_UP_VALUE,50);
+
+	for(int i = 0; i < 50; i++) {
+		double numerator = (FOURBAR_UP_VALUE - fourbar->getPosition()) * FOURBAR_GAIN;
+		double ratio = (double)(abs(numerator)) / FOURBAR_UP_VALUE;
+		int velocity = 100 * ratio;
+
+		if(velocity < FOURBAR_UP_MIN_VEL) {
+			velocity = FOURBAR_UP_MIN_VEL;
+		}
+		fourbar->moveVelocity(velocity);
+
+		pros::delay(100);
+	}
+
+	pros::delay(500);
 }
 
 void Hamburger::tiltFourbarRetract() {
 	// fourbar->tarePosition();
 	fourbar->moveAbsolute(0,100);
+}
+
+void Hamburger::brakeEnable() {
+	trayBrake->moveAbsolute(BRAKE_ENABLE_VALUE, BRAKE_MAX_SPEED);
+}
+
+void Hamburger::brakeDisable() {
+	trayBrake->moveAbsolute(BRAKE_DISABLE_VALUE, BRAKE_MAX_SPEED);
 }

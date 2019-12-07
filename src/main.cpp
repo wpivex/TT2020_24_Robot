@@ -99,15 +99,14 @@ void autonomous() {
 	pros::delay(1000);
 	robot->drive->chassis->getModel()->stop();
 	// score
-	robot->runIntake(-100);
 	pros::delay(500);
-	robot->runIntake(0);
-	pros::delay(500);
-	robot->tiltFourbarScore();
-	pros::delay(5000);
-	robot->runIntake(-50);
+	robot->brakeEnable();
+	pros::delay(200);
+	robot->tiltFourbarScore(); // Contains a delay of 5000 millsecs
 	robot->drive->chassis->getModel()->forward(-50);
 	pros::delay(1000);
+	robot->brakeDisable();
+	pros::delay(100);
 	robot->tiltFourbarRetract();
 	robot->drive->chassis->getModel()->stop();
 
@@ -146,6 +145,17 @@ void autonomous() {
 	// pros::delay(300);
 	// robot->runIntake(-40);
 	// robot->drive->chassis->moveDistance(-10_in);
+
+	/*
+	 * -- New auto plan: --
+	 * Drive towards first four at 75% (4)
+	 * Grab green cube at tower in front (5)
+	 * Grab two orange cubes from "L-stack" to the left (7)
+	 * Grab green cube at tower in front (8)
+	 * Grab three on bottom of "Horz-L-stack" in front (11)
+	 * Place cubes
+	 * (Maybe head towards pyramid and pick up cubes)
+	 */
 }
 
 /**

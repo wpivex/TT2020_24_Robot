@@ -17,7 +17,7 @@ using namespace okapi;
 #define INTAKE_RIGHT 19
 
 #define TRAY_BRAKE 5
-#define DISABLE_PASSIVE_TRAY
+// #define DISABLE_PASSIVE_TRAY
 
 #define FOURBAR 18
 #define FOURBAR2 17
@@ -47,14 +47,14 @@ class Hamburger {
 		const double FOURBAR_UP_VALUE = 1050;
 		const double FOURBAR_BRAKE_DISABLE_VALUE = 800;
 		const double FOURBAR_MARGIN_VALUE = 10;
-		const int FOURBAR_UP_MIN_VEL = 25;
-		const double FOURBAR_GAIN = 0.75;
+		const int FOURBAR_UP_MIN_VEL = 30;
+		const double FOURBAR_GAIN = 0.85;
 
 		const double BRAKE_MAX_SPEED = 75;
-		const double BRAKE_ENABLE_VALUE = 190;
-		const double BRAKE_DISABLE_VALUE = 120;
+		const double BRAKE_ENABLE_VALUE = 200;
+		const double BRAKE_DISABLE_VALUE = 0;
 		const double BRAKE_MARGIN_VALUE = 5;
-		const double BRAKE_STALL_CURRENT = 4.00;
+		const double BRAKE_STALL_CURRENT = 1900;
 	public:
 		static Hamburger* getRobot();
 		std::shared_ptr<Drive> drive;
@@ -67,4 +67,6 @@ class Hamburger {
 		void moveFourbar(int power);
 		void tiltFourbarScore();
 		void tiltFourbarRetract();
+		void brakeEnable();
+		void brakeDisable();
 };
