@@ -62,6 +62,14 @@ void competition_initialize() {}
 void autonomous() {
 	auto robot = Hamburger::getRobot();
 
+	//deploy tray
+	robot->trayBrake->moveVelocity(-100);
+	robot->moveFourbar(100);
+	pros::delay(700);
+	robot->moveFourbar(0);
+	robot->trayBrake->moveVelocity(0);
+	robot->trayBrake->tarePosition();
+	pros::delay(2000);
 	// get four at start
 	robot->drive->chassis->getModel()->setMaxVelocity(100);
 	robot->runIntake(140);
@@ -69,7 +77,7 @@ void autonomous() {
 	// get stray cube
 	robot->drive->chassis->turnAngle(20_deg);
 	robot->drive->chassis->moveDistance(5_in);
-	pros::delay(200);
+	pros::delay(100);
 	robot->drive->chassis->moveDistance(-5_in);
 	robot->drive->chassis->turnAngle(-20_deg);
 	// go to next stack
@@ -82,32 +90,44 @@ void autonomous() {
 	robot->drive->chassis->moveDistance(21_in);
 	robot->drive->chassis->turnAngle(-30_deg);
 	robot->drive->chassis->moveDistance(2_in);
-	robot->drive->chassis->turnAngle(-70_deg);
+	robot->drive->chassis->turnAngle(-67_deg);
 	// get stack of 3
-	robot->drive->chassis->getModel()->setMaxVelocity(80);
+	robot->drive->chassis->getModel()->setMaxVelocity(50);
 	robot->runIntake(200);
-	robot->drive->chassis->moveDistance(34_in);
-	pros::delay(1000);
+	robot->drive->chassis->moveDistance(30_in);
+	// jiggle
+	robot->runIntake(0);
+	robot->drive->chassis->getModel()->setMaxVelocity(150);
+	robot->drive->chassis->moveDistance(-3_in);
+	robot->runIntake(200);
+	pros::delay(500);
+	robot->drive->chassis->getModel()->setMaxVelocity(100);
+	robot->drive->chassis->moveDistance(9_in);
+	pros::delay(600);
 	robot->drive->chassis->moveDistance(-5_in);
 	// go to goal
 	robot->drive->chassis->getModel()->setMaxVelocity(100);
-	robot->runIntake(40);
-	robot->drive->chassis->turnAngle(-151_deg);
+	robot->runIntake(200);
+	robot->drive->chassis->turnAngle(-153_deg);
 	robot->drive->chassis->moveDistance(34_in);
+	robot->drive->chassis->getModel()->setMaxVelocity(100);
 	robot->runIntake(0);
 	robot->drive->chassis->getModel()->forward(30);
+	robot->brakeEnable();
 	pros::delay(1000);
 	robot->drive->chassis->getModel()->stop();
 	// score
-	pros::delay(500);
-	robot->brakeEnable();
-	pros::delay(200);
 	robot->tiltFourbarScore(); // Contains a delay of 5000 millsecs
-	robot->drive->chassis->getModel()->forward(-50);
+	robot->drive->chassis->getModel()->forward(-20);
+	pros::delay(300);
+	robot->drive->chassis->getModel()->stop();
+	robot->tiltFourbarRetract();
+	// robot->runIntake(-40);
+	pros::delay(1000);
+	robot->drive->chassis->getModel()->forward(-20);
 	pros::delay(1000);
 	robot->brakeDisable();
 	pros::delay(100);
-	robot->tiltFourbarRetract();
 	robot->drive->chassis->getModel()->stop();
 
 

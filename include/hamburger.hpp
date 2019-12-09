@@ -33,7 +33,6 @@ class Hamburger {
 		static Hamburger* robot;
 		std::shared_ptr<MotorGroup> intake;
 		std::shared_ptr<MotorGroup> fourbar;
-		std::shared_ptr<MotorGroup> trayBrake;
 
 		Hamburger();
 
@@ -69,4 +68,5 @@ class Hamburger {
 		void tiltFourbarRetract();
 		void brakeEnable();
 		void brakeDisable();
+		std::shared_ptr<MotorGroup> trayBrake;
 };
