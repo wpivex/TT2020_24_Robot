@@ -75,8 +75,10 @@ void Hamburger::opControlFourbar(pros::Controller& joystick) {
 void Hamburger::opControlTrayBrake(pros::Controller& joystick) {
 	#ifndef DISABLE_PASSIVE_TRAY
 
+  // Use passive brake contorl, enabling brake when tray reaches a specified position
+
 	// Toggle brake if the upward position is reached and the brake is off
-	if (abs(fourbar->getPosition() - FOURBAR_UP_VALUE) < FOURBAR_MARGIN_VALUE
+	if (abs(fourbar->getPosition() - FOURBAR_BRAKE_ENABLE_VALUE) < FOURBAR_MARGIN_VALUE
 		  && !trayBrakeOn) {
 		trayBrakeOn = true;
 		trayBrakeSetpoint = BRAKE_ENABLE_VALUE;
@@ -96,6 +98,8 @@ void Hamburger::opControlTrayBrake(pros::Controller& joystick) {
 
 	#else
 
+  // Use manual brake control
+
 	if(trayBrake->getCurrentDraw() >= BRAKE_STALL_CURRENT) {
 		trayBrakeSetpoint = trayBrake->getPosition();
 	}
@@ -109,9 +113,6 @@ void Hamburger::opControlTrayBrake(pros::Controller& joystick) {
 	trayBrake->moveAbsolute(trayBrakeSetpoint, BRAKE_MAX_SPEED);
 
 	#endif
-
-	pros::lcd::print(5, "Brake Pos: %f", trayBrake->getPosition());
-	pros::lcd::print(4, "Brake Current: %d", trayBrake->getCurrentDraw());
 }
 
 void Hamburger::moveFourbar(int power) {
