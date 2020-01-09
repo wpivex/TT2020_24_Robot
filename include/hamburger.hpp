@@ -45,7 +45,7 @@ class Hamburger {
 		const double fourbarThreshold = 500;
 		const double FOURBAR_UP_VALUE = 1050;
 		const double FOURBAR_BRAKE_DISABLE_VALUE = 750;
-    const double FOURBAR_BRAKE_ENABLE_VALUE = 800;
+		const double FOURBAR_BRAKE_ENABLE_VALUE = 800;
 		const double FOURBAR_MARGIN_VALUE = 10;
 		const int FOURBAR_UP_MIN_VEL = 30;
 		const double FOURBAR_GAIN = 0.85;
