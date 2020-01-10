@@ -11,13 +11,15 @@ Hamburger *Hamburger::getRobot() {
 Hamburger::Hamburger() {
 	drive = std::make_shared<Drive>();
 
-	MotorGroup intakeMotors({Motor(INTAKE_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-							 Motor(INTAKE_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+	MotorGroup intakeMotors({Motor(INTAKE_LEFT_BOT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+							 Motor(INTAKE_LEFT_TOP, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+							 Motor(INTAKE_RIGHT_BOT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+							 Motor(INTAKE_RIGHT_TOP, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
 	intakeMotors.setBrakeMode(AbstractMotor::brakeMode::hold);
 	intake = std::make_shared<MotorGroup>(intakeMotors);
 
-	MotorGroup fourbarMotors({Motor(FOURBAR, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
-							Motor(FOURBAR2, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
+	MotorGroup fourbarMotors({Motor(FOURBAR_LEFT, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
+							Motor(FOURBAR_RIGHT, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
 	});
 	fourbar = std::make_shared<MotorGroup>(fourbarMotors);
 
@@ -47,8 +49,6 @@ void Hamburger::runIntake(int power) {
 void Hamburger::opControlIntake(pros::Controller &joystick) {
 	int r1 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
 	int r2 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
-	int l1 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
-	int l2 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
 
 	if (r1) {
 		runIntake(200);
@@ -69,7 +69,6 @@ void Hamburger::opControlFourbar(pros::Controller& joystick) {
 	} else {
 		moveFourbar(0);
 	}
-	// moveFourbar(joystick.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y));
 }
 
 void Hamburger::opControlTrayBrake(pros::Controller& joystick) {
@@ -77,16 +76,16 @@ void Hamburger::opControlTrayBrake(pros::Controller& joystick) {
 
   // Use passive brake contorl, enabling brake when tray reaches a specified position
 
+	pros::lcd::set_text(4, "Fourbar Pos: " + std::to_string(fourbar->getPosition()));
+	pros::lcd::set_text(5, "Fourbar Enable Error: " + std::to_string(abs(fourbar->getPosition() - FOURBAR_BRAKE_ENABLE_VALUE)));
+	pros::lcd::set_text(6, "Brake Current: " + std::to_string(trayBrake->getCurrentDraw()));
+
 	// Toggle brake if the upward position is reached and the brake is off
-	if (abs(fourbar->getPosition() - FOURBAR_BRAKE_ENABLE_VALUE) < FOURBAR_MARGIN_VALUE
-		  && !trayBrakeOn) {
-		trayBrakeOn = true;
+	if (abs(fourbar->getPosition() - FOURBAR_BRAKE_ENABLE_VALUE) <= FOURBAR_MARGIN_VALUE) {
 		trayBrakeSetpoint = BRAKE_ENABLE_VALUE;
 	}
 	// Toggle brake if the disable position is reached and the brake is on
-	else if (abs(fourbar->getPosition() - FOURBAR_BRAKE_DISABLE_VALUE) < FOURBAR_MARGIN_VALUE
-					 && trayBrakeOn) {
-		trayBrakeOn = false;
+	else if (abs(fourbar->getPosition() - FOURBAR_BRAKE_DISABLE_VALUE) <= FOURBAR_MARGIN_VALUE) {
 		trayBrakeSetpoint = BRAKE_DISABLE_VALUE;
 	}
 
@@ -99,6 +98,9 @@ void Hamburger::opControlTrayBrake(pros::Controller& joystick) {
 	#else
 
   // Use manual brake control
+
+	pros::lcd::set_text(4, "Fourbar Pos: " + std::to_string(fourbar->getPosition()));
+	pros::lcd::set_text(5, "Brake Current: " + std::to_string(trayBrake->getCurrentDraw()));
 
 	if(trayBrake->getCurrentDraw() >= BRAKE_STALL_CURRENT) {
 		trayBrakeSetpoint = trayBrake->getPosition();

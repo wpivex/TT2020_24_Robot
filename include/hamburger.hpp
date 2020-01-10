@@ -13,14 +13,16 @@ using namespace okapi;
 #define DRIVE_RIGHT_MID_BACK 8
 #define DRIVE_RIGHT_BACK 6
 
-#define INTAKE_LEFT 20
-#define INTAKE_RIGHT 19
+#define INTAKE_LEFT_BOT 20
+#define INTAKE_LEFT_TOP 16
+#define INTAKE_RIGHT_BOT 19
+#define INTAKE_RIGHT_TOP 15
 
-#define TRAY_BRAKE 5
+#define TRAY_BRAKE 11
 // #define DISABLE_PASSIVE_TRAY
 
-#define FOURBAR 18
-#define FOURBAR2 17
+#define FOURBAR_LEFT 18
+#define FOURBAR_RIGHT 17
 
 #define ENCODER_LEFT_DRIVE_TOP 'a'
 #define ENCODER_LEFT_DRIVE_BOT 'b'
@@ -39,22 +41,20 @@ class Hamburger {
 		int lastUp = 0;
 		int lastDown = 0;
 
-		bool trayBrakeOn = false;
 		double trayBrakeSetpoint = 0;
 
 		const double fourbarThreshold = 500;
 		const double FOURBAR_UP_VALUE = 1050;
-		const double FOURBAR_BRAKE_DISABLE_VALUE = 750;
+		const double FOURBAR_BRAKE_DISABLE_VALUE = 500;
 		const double FOURBAR_BRAKE_ENABLE_VALUE = 800;
-		const double FOURBAR_MARGIN_VALUE = 10;
+		const double FOURBAR_MARGIN_VALUE = 100;
 		const int FOURBAR_UP_MIN_VEL = 30;
-		const double FOURBAR_GAIN = 0.85;
+		const double FOURBAR_GAIN = 0.70;
 
 		const double BRAKE_MAX_SPEED = 75;
 		const double BRAKE_ENABLE_VALUE = 200;
 		const double BRAKE_DISABLE_VALUE = 0;
-		const double BRAKE_MARGIN_VALUE = 5;
-		const double BRAKE_STALL_CURRENT = 1900;
+		const double BRAKE_STALL_CURRENT = 2400;
 	public:
 		static Hamburger* getRobot();
 		std::shared_ptr<Drive> drive;
