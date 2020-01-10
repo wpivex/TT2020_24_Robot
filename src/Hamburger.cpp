@@ -26,6 +26,10 @@ Hamburger::Hamburger() {
 	MotorGroup brakeMotors({Motor(TRAY_BRAKE, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees)});
 	trayBrake = std::make_shared<MotorGroup>(brakeMotors);
 
+	MotorGroup trayDeployMotors({Motor(TRAY_DEPLOY, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees)});
+	trayDeploy = std::make_shared<MotorGroup>(trayDeployMotors);
+	trayDeploy->tarePosition();
+
 	// brainDriver = std::make_shared<BrainDriver>(BrainDriver());
 }
 

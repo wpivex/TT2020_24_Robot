@@ -18,6 +18,7 @@ using namespace okapi;
 #define INTAKE_RIGHT_BOT 19
 #define INTAKE_RIGHT_TOP 15
 
+#define TRAY_DEPLOY 12
 #define TRAY_BRAKE 11
 // #define DISABLE_PASSIVE_TRAY
 
@@ -70,4 +71,5 @@ class Hamburger {
 		void brakeEnable();
 		void brakeDisable();
 		std::shared_ptr<MotorGroup> trayBrake;
+		std::shared_ptr<MotorGroup> trayDeploy;
 };

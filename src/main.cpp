@@ -64,16 +64,20 @@ void autonomous() {
 
 	//deploy tray
 	robot->trayBrake->moveVelocity(-100);
-	robot->moveFourbar(100);
+	robot->trayDeploy->moveVelocity(100);
 	pros::delay(700);
-	robot->moveFourbar(0);
 	robot->trayBrake->moveVelocity(0);
 	robot->trayBrake->tarePosition();
 	pros::delay(2000);
+	robot->trayDeploy->moveVelocity(-100);
+	// pros::delay(1800);
+	// robot->trayDeploy->moveVelocity(0);
+	pros::delay(100000);
 	// get four at start
 	robot->drive->chassis->getModel()->setMaxVelocity(100);
 	robot->runIntake(140);
 	robot->drive->chassis->moveDistance(43_in);
+	robot->trayDeploy->moveVelocity(0);
 	// get stray cube
 	robot->drive->chassis->turnAngle(20_deg);
 	robot->drive->chassis->moveDistance(5_in);
