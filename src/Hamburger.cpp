@@ -24,6 +24,7 @@ Hamburger::Hamburger() {
 	fourbar = std::make_shared<MotorGroup>(fourbarMotors);
 
 	MotorGroup brakeMotors({Motor(TRAY_BRAKE, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees)});
+	brakeMotors.setBrakeMode(AbstractMotor::brakeMode::hold);
 	trayBrake = std::make_shared<MotorGroup>(brakeMotors);
 
 	MotorGroup trayDeployMotors({Motor(TRAY_DEPLOY, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees)});

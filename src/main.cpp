@@ -68,16 +68,14 @@ void autonomous() {
 	pros::delay(700);
 	robot->trayBrake->moveVelocity(0);
 	robot->trayBrake->tarePosition();
-	pros::delay(2000);
+	pros::delay(1000);
 	robot->trayDeploy->moveVelocity(-100);
-	// pros::delay(1800);
-	// robot->trayDeploy->moveVelocity(0);
-	pros::delay(100000);
+	pros::delay(1500);
+	robot->trayDeploy->moveVelocity(0);
 	// get four at start
 	robot->drive->chassis->getModel()->setMaxVelocity(100);
 	robot->runIntake(140);
-	robot->drive->chassis->moveDistance(43_in);
-	robot->trayDeploy->moveVelocity(0);
+	robot->drive->chassis->moveDistance(40_in);
 	// get stray cube
 	robot->drive->chassis->turnAngle(20_deg);
 	robot->drive->chassis->moveDistance(5_in);
@@ -87,7 +85,7 @@ void autonomous() {
 	// go to next stack
 	robot->drive->chassis->getModel()->setMaxVelocity(130);
 	robot->runIntake(40);
-	robot->drive->chassis->moveDistance(-30_in);
+	robot->drive->chassis->moveDistance(-28_in);
 	robot->drive->chassis->turnAngle(100_deg);
 	robot->drive->chassis->getModel()->setMaxVelocity(100);
 	robot->runIntake(200);
@@ -99,20 +97,23 @@ void autonomous() {
 	robot->drive->chassis->getModel()->setMaxVelocity(50);
 	robot->runIntake(200);
 	robot->drive->chassis->moveDistance(30_in);
-	// jiggle
-	robot->runIntake(0);
-	robot->drive->chassis->getModel()->setMaxVelocity(150);
-	robot->drive->chassis->moveDistance(-3_in);
-	robot->runIntake(200);
-	pros::delay(500);
-	robot->drive->chassis->getModel()->setMaxVelocity(100);
-	robot->drive->chassis->moveDistance(9_in);
-	pros::delay(600);
 	robot->drive->chassis->moveDistance(-5_in);
+	// jiggle
+	// robot->runIntake(0);
+	// robot->drive->chassis->getModel()->setMaxVelocity(150);
+	// robot->drive->chassis->moveDistance(-3_in);
+	// robot->runIntake(200);
+	// pros::delay(500);
+	// robot->drive->chassis->getModel()->setMaxVelocity(100);
+	// robot->drive->chassis->moveDistance(9_in);
+	// pros::delay(600);
+	// robot->drive->chassis->moveDistance(-5_in);
 	// go to goal
+	// robot->drive->chassis->getModel()->setMaxVelocity(50);
+	// robot->drive->chassis->moveDistance(-10_in);
 	robot->drive->chassis->getModel()->setMaxVelocity(100);
 	robot->runIntake(200);
-	robot->drive->chassis->turnAngle(-153_deg);
+	robot->drive->chassis->turnAngle(-130_deg);
 	robot->drive->chassis->moveDistance(34_in);
 	robot->drive->chassis->getModel()->setMaxVelocity(100);
 	robot->runIntake(0);
@@ -122,7 +123,7 @@ void autonomous() {
 	robot->drive->chassis->getModel()->stop();
 	// score
 	robot->tiltFourbarScore(); // Contains a delay of 5000 millsecs
-	robot->drive->chassis->getModel()->forward(-20);
+	robot->drive->chassis->getModel()->forward(-40);
 	pros::delay(300);
 	robot->drive->chassis->getModel()->stop();
 	robot->tiltFourbarRetract();
@@ -133,53 +134,6 @@ void autonomous() {
 	robot->brakeDisable();
 	pros::delay(100);
 	robot->drive->chassis->getModel()->stop();
-
-
-	// TODO Write this with actual Odom methods
-	// drive to 4 stack
-	// robot->drive->chassis->getModel()->setMaxVelocity(100);
-	// robot->runIntake(140);
-	// robot->drive->chassis->driveToPoint({0_in, 40_in});
-	// robot->runIntake(50);
-	// // drive back and go to next group of 4
-	// robot->drive->chassis->getModel()->setMaxVelocity(200);
-	// robot->drive->chassis->turnToAngle(-30_deg);
-	// robot->drive->chassis->driveToPoint({0_in, 10_in},true);
-
-
-	// robot->drive->chassis->turnToPoint({24_in, 10_in});
-	// robot->drive->chassis->driveToPoint({24_in, 10_in});
-	// robot->drive->chassis->turnToPoint({24_in, 38_in});
-	// // drive and pick up next group of 4
-	// robot->drive->chassis->getModel()->setMaxVelocity(140);
-	// robot->runIntake(200);
-	// robot->drive->chassis->driveToPoint({24_in, 42_in});
-
-	// // drive to goal
-	// robot->runIntake(50);
-	// robot->drive->chassis->getModel()->setMaxVelocity(140);
-	// robot->drive->chassis->turnToPoint({-5_in, 10_in});
-	// robot->drive->chassis->driveToPoint({-5_in, 10_in});
-	// robot->drive->chassis->getModel()->forward(80);
-	// pros::delay(1000);
-
-	// // score
-	// robot->runIntake(0);
-	// robot->tiltFourbarScore();
-	// pros::delay(300);
-	// robot->runIntake(-40);
-	// robot->drive->chassis->moveDistance(-10_in);
-
-	/*
-	 * -- New auto plan: --
-	 * Drive towards first four at 75% (4)
-	 * Grab green cube at tower in front (5)
-	 * Grab two orange cubes from "L-stack" to the left (7)
-	 * Grab green cube at tower in front (8)
-	 * Grab three on bottom of "Horz-L-stack" in front (11)
-	 * Place cubes
-	 * (Maybe head towards pyramid and pick up cubes)
-	 */
 }
 
 /**

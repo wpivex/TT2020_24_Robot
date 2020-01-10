@@ -53,9 +53,9 @@ class Hamburger {
 		const double FOURBAR_GAIN = 0.70;
 
 		const double BRAKE_MAX_SPEED = 75;
-		const double BRAKE_ENABLE_VALUE = 200;
+		const double BRAKE_ENABLE_VALUE = 250;
 		const double BRAKE_DISABLE_VALUE = 0;
-		const double BRAKE_STALL_CURRENT = 2400;
+		const double BRAKE_STALL_CURRENT = 2450;
 	public:
 		static Hamburger* getRobot();
 		std::shared_ptr<Drive> drive;
