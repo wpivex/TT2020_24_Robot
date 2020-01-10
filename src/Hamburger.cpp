@@ -31,6 +31,13 @@ Hamburger::Hamburger() {
 	trayDeploy = std::make_shared<MotorGroup>(trayDeployMotors);
 	trayDeploy->tarePosition();
 
+	MotorGroup liftMotors({Motor(ARM_LIFT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+	liftMotors.setBrakeMode(AbstractMotor::brakeMode::hold);
+	armLift = std::make_shared<MotorGroup>(liftMotors);
+
+	MotorGroup gripMotors({Motor(ARM_GRIP, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+	armGrip = std::make_shared<MotorGroup>(gripMotors);
+
 	// brainDriver = std::make_shared<BrainDriver>(BrainDriver());
 }
 
@@ -38,6 +45,7 @@ void Hamburger::opControl(pros::Controller &joystick) {
 	drive->opControlDrive(joystick);
 	opControlFourbar(joystick);
 	opControlIntake(joystick);
+	opControlArm(joystick);
 
 	/*
 	 * Enable brake when angle of tray reaches 90 degrees
@@ -73,6 +81,26 @@ void Hamburger::opControlFourbar(pros::Controller& joystick) {
 		moveFourbar(-100);
 	} else {
 		moveFourbar(0);
+	}
+}
+
+void Hamburger::opControlArm(pros::Controller& joystick) {
+	int up = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
+	int down = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
+	int buttonA = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+
+	if (up) {
+		armLift->moveVelocity(200);
+	} else if (down) {
+		armLift->moveVelocity(-50);
+	} else {
+		armLift->moveVelocity(0);
+	}
+
+	if (buttonA) {
+		armGrip->moveVelocity(200);
+	} else {
+		armGrip->moveVelocity(0);
 	}
 }
 

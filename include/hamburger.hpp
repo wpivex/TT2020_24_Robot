@@ -25,6 +25,9 @@ using namespace okapi;
 #define FOURBAR_LEFT 18
 #define FOURBAR_RIGHT 17
 
+#define ARM_GRIP 13
+#define ARM_LIFT 14
+
 #define ENCODER_LEFT_DRIVE_TOP 'a'
 #define ENCODER_LEFT_DRIVE_BOT 'b'
 #define ENCODER_RIGHT_DRIVE_TOP 'c'
@@ -36,6 +39,8 @@ class Hamburger {
 		static Hamburger* robot;
 		std::shared_ptr<MotorGroup> intake;
 		std::shared_ptr<MotorGroup> fourbar;
+		std::shared_ptr<MotorGroup> armLift;
+		std::shared_ptr<MotorGroup> armGrip;
 
 		Hamburger();
 
@@ -63,6 +68,7 @@ class Hamburger {
 		void opControlIntake(pros::Controller& joystick);
 		void opControlFourbar(pros::Controller& joystick);
 		void opControlTrayBrake(pros::Controller& joystick);
+		void opControlArm(pros::Controller& joystick);
 		void opControl(pros::Controller& joystick);
 		void runIntake(int power);
 		void moveFourbar(int power);
