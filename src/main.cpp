@@ -62,7 +62,9 @@ void competition_initialize() {}
 void autonomous() {
 	auto robot = Hamburger::getRobot();
 
-	#ifndef BLUE_ALLIANCE
+	#ifdef BLUE
+	robot->drive->chassis->setTurnsMirrored(false);
+	#elif RED
 	robot->drive->chassis->setTurnsMirrored(true);
 	#endif
 
