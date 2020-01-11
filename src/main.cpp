@@ -64,7 +64,9 @@ void autonomous() {
 
 	#ifdef BLUE
 	robot->drive->chassis->setTurnsMirrored(false);
-	#elif RED
+	#endif
+
+	#ifdef RED
 	robot->drive->chassis->setTurnsMirrored(true);
 	#endif
 
