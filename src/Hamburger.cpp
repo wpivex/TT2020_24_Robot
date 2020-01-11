@@ -162,9 +162,9 @@ void Hamburger::opControlTrayDeploy(pros::Controller& joystick) {
 void Hamburger::deployTray() {
 	static bool alreadyRun = false;
 
-	if(alreadyRun) {
-		return;
-	}
+	// if(alreadyRun) {
+	// 	return;
+	// }
 
 	trayBrake->moveVelocity(-100);
 	trayDeploy->moveVelocity(100);
