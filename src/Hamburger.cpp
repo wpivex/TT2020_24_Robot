@@ -86,14 +86,14 @@ void Hamburger::opControlFourbar(pros::Controller& joystick) {
 }
 
 void Hamburger::opControlArm(pros::Controller& joystick) {
-	int up = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_Y);
+	int up = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_X);
 	int down = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_B);
 	int buttonA = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
 	if (up) {
 		armLift->moveVelocity(200);
 	} else if (down) {
-		armLift->moveVelocity(-50);
+		armLift->moveVelocity(-150);
 	} else {
 		armLift->moveVelocity(0);
 	}
@@ -152,21 +152,20 @@ void Hamburger::opControlTrayBrake(pros::Controller& joystick) {
 }
 
 void Hamburger::opControlTrayDeploy(pros::Controller& joystick) {
+	int left = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
+
+	if(left) {
+		deployTray();
+	}
+}
+
+void Hamburger::deployTray() {
 	static bool alreadyRun = false;
 
 	if(alreadyRun) {
 		return;
 	}
 
-	int left = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
-
-	if(left) {
-		deployTray();
-		alreadyRun = true;
-	}
-}
-
-void Hamburger::deployTray() {
 	trayBrake->moveVelocity(-100);
 	trayDeploy->moveVelocity(100);
 	pros::delay(700);
@@ -176,6 +175,8 @@ void Hamburger::deployTray() {
 	trayDeploy->moveVelocity(-100);
 	pros::delay(1500);
 	trayDeploy->moveVelocity(0);
+
+	alreadyRun = true;
 }
 
 void Hamburger::moveFourbar(int power) {
