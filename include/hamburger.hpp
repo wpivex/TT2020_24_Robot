@@ -52,14 +52,14 @@ class Hamburger {
 		double trayBrakeSetpoint = 0;
 
 		const double fourbarThreshold = 500;
-		const double FOURBAR_UP_VALUE = 1020;
-		const double FOURBAR_BRAKE_DISABLE_VALUE = 500;
-		const double FOURBAR_BRAKE_ENABLE_VALUE = 700;
+		const double FOURBAR_UP_VALUE = 950;
+		const double FOURBAR_BRAKE_DISABLE_VALUE = 420;
+		const double FOURBAR_BRAKE_ENABLE_VALUE = 600;
 		const double FOURBAR_MARGIN_VALUE = 100;
 		const int FOURBAR_UP_MIN_VEL = 30;
-		const double FOURBAR_GAIN = 0.70;
+		const double FOURBAR_GAIN = 0.40;
 
-		const double BRAKE_MAX_SPEED = 75;
+		const double BRAKE_MAX_SPEED = 50;
 		const double BRAKE_ENABLE_VALUE = 250;
 		const double BRAKE_DISABLE_VALUE = 0;
 		const double BRAKE_STALL_CURRENT = 2450;
@@ -75,6 +75,7 @@ class Hamburger {
 		void opControl(pros::Controller& joystick);
 		void runIntake(int power);
 		void moveFourbar(int power);
+		void moveFourbar2(int power);
 		void tiltFourbarScore();
 		void tiltFourbarRetract();
 		void brakeEnable();

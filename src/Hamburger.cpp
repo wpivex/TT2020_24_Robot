@@ -77,11 +77,11 @@ void Hamburger::opControlIntake(pros::Controller &joystick) {
 
 void Hamburger::opControlFourbar(pros::Controller& joystick) {
 	if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-		moveFourbar(100);
+		moveFourbar2(100);
 	} else if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-		moveFourbar(-100);
+		moveFourbar2(-100);
 	} else {
-		moveFourbar(0);
+		moveFourbar2(0);
 	}
 }
 
@@ -153,10 +153,10 @@ void Hamburger::opControlTrayBrake(pros::Controller& joystick) {
 
 void Hamburger::opControlTrayDeploy(pros::Controller& joystick) {
 	int left = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
-
+	int right = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT);
 	if(left) {
 		deployTray();
-	}
+	} 
 }
 
 void Hamburger::deployTray() {
@@ -202,18 +202,35 @@ void Hamburger::moveFourbar(int power) {
 	}
 }
 
+void Hamburger::moveFourbar2(int power) {
+	if(power > 0) {
+		double numerator = FOURBAR_UP_VALUE - fourbar->getPosition() * 9 / 10;
+		double ratio = (double)(abs(numerator)) / FOURBAR_UP_VALUE;
+		fourbar->moveVelocity(power * ratio);
+
+	} else {
+		// full speed down
+		fourbar->moveVelocity(power);
+	}
+}
+
 void Hamburger::tiltFourbarScore() {
 	fourbar->tarePosition();
 
-	for(int i = 0; i < 50; i++) {
-		double numerator = (FOURBAR_UP_VALUE - fourbar->getPosition()) * FOURBAR_GAIN;
-		double ratio = (double)(abs(numerator)) / FOURBAR_UP_VALUE;
-		int velocity = 100 * ratio;
+	for(int i = 0; i < 56; i++) {
+		// double numerator = (FOURBAR_UP_VALUE - fourbar->getPosition()) * FOURBAR_GAIN;
+		// double ratio = (double)(abs(numerator)) / FOURBAR_UP_VALUE;
+		// int velocity = 100 * ratio;
+		
 
-		if(velocity < FOURBAR_UP_MIN_VEL) {
-			velocity = FOURBAR_UP_MIN_VEL;
-		}
-		fourbar->moveVelocity(velocity);
+		// if(velocity < FOURBAR_UP_MIN_VEL) {
+		// 	velocity = FOURBAR_UP_MIN_VEL;
+		// }
+		// fourbar->moveVelocity(velocity);
+
+		double numerator = FOURBAR_UP_VALUE - fourbar->getPosition() * 9 / 10;
+		double ratio = (double)(abs(numerator)) / FOURBAR_UP_VALUE;
+		fourbar->moveVelocity(100 * ratio);
 
 		pros::delay(100);
 	}

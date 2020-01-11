@@ -79,7 +79,7 @@ void autonomous() {
 	// get stray cube
 	robot->drive->chassis->turnAngle(20_deg);
 	robot->drive->chassis->moveDistance(5_in);
-	pros::delay(100);
+	// pros::delay(100);
 	robot->drive->chassis->moveDistance(-5_in);
 	robot->drive->chassis->turnAngle(-20_deg);
 	// go to next stack
@@ -91,13 +91,13 @@ void autonomous() {
 	robot->runIntake(200);
 	robot->drive->chassis->moveDistance(21_in);
 	robot->drive->chassis->turnAngle(-30_deg);
-	robot->drive->chassis->moveDistance(2_in);
+	// robot->drive->chassis->moveDistance(2_in);
 	robot->drive->chassis->turnAngle(-67_deg);
 	// get stack of 3
 	robot->drive->chassis->getModel()->setMaxVelocity(50);
 	robot->runIntake(200);
 	robot->drive->chassis->moveDistance(30_in);
-	robot->drive->chassis->moveDistance(-5_in);
+	// robot->drive->chassis->moveDistance(-5_in);
 	// jiggle
 	// robot->runIntake(0);
 	// robot->drive->chassis->getModel()->setMaxVelocity(150);
@@ -113,12 +113,12 @@ void autonomous() {
 	// robot->drive->chassis->moveDistance(-10_in);
 	robot->drive->chassis->getModel()->setMaxVelocity(50);
 	robot->runIntake(200);
-	robot->drive->chassis->turnAngle(-150_deg);
+	robot->drive->chassis->turnAngle(-156_deg);
 	robot->drive->chassis->getModel()->setMaxVelocity(100);
-	robot->drive->chassis->moveDistance(34_in);
+	robot->drive->chassis->moveDistance(32_in);
 	robot->drive->chassis->getModel()->setMaxVelocity(100);
 	robot->runIntake(0);
-	robot->drive->chassis->getModel()->forward(30);
+	robot->drive->chassis->getModel()->forward(50);
 	// std::valarray<std::int32_t> initVals = robot->drive->chassis->getModel()->getSensorVals();
 	robot->brakeEnable();
 	pros::delay(1000);

@@ -29,7 +29,7 @@ Drive::Drive() {
                   {0.0005, 0, 0.00000}  // angle controller gains (helps drive straight)
               )
               .withSensors(leftEncoder, rightEncoder)
-              .withClosedLoopControllerTimeUtil(50, 5, 250_ms)
+              .withClosedLoopControllerTimeUtil(50, 5, 500_ms)
               .withOdometry(StateMode::CARTESIAN, 1_in, 5_deg, 0.0001_mps)
               .buildOdometry();
 }
