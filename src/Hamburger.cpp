@@ -46,6 +46,7 @@ void Hamburger::opControl(pros::Controller &joystick) {
 	opControlFourbar(joystick);
 	opControlIntake(joystick);
 	opControlArm(joystick);
+	opControlTrayDeploy(joystick);
 
 	/*
 	 * Enable brake when angle of tray reaches 90 degrees
@@ -148,6 +149,33 @@ void Hamburger::opControlTrayBrake(pros::Controller& joystick) {
 	trayBrake->moveAbsolute(trayBrakeSetpoint, BRAKE_MAX_SPEED);
 
 	#endif
+}
+
+void Hamburger::opControlTrayDeploy(pros::Controller& joystick) {
+	static bool alreadyRun = false;
+
+	if(alreadyRun) {
+		return;
+	}
+
+	int left = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
+
+	if(left) {
+		deployTray();
+		alreadyRun = true;
+	}
+}
+
+void Hamburger::deployTray() {
+	trayBrake->moveVelocity(-100);
+	trayDeploy->moveVelocity(100);
+	pros::delay(700);
+	trayBrake->moveVelocity(0);
+	trayBrake->tarePosition();
+	pros::delay(1000);
+	trayDeploy->moveVelocity(-100);
+	pros::delay(1500);
+	trayDeploy->moveVelocity(0);
 }
 
 void Hamburger::moveFourbar(int power) {

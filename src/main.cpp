@@ -62,16 +62,8 @@ void competition_initialize() {}
 void autonomous() {
 	auto robot = Hamburger::getRobot();
 
-	//deploy tray
-	robot->trayBrake->moveVelocity(-100);
-	robot->trayDeploy->moveVelocity(100);
-	pros::delay(700);
-	robot->trayBrake->moveVelocity(0);
-	robot->trayBrake->tarePosition();
-	pros::delay(1000);
-	robot->trayDeploy->moveVelocity(-100);
-	pros::delay(1500);
-	robot->trayDeploy->moveVelocity(0);
+	// deploy tray
+	robot->deployTray();
 	// get four at start
 	robot->drive->chassis->getModel()->setMaxVelocity(100);
 	robot->runIntake(140);
@@ -85,7 +77,7 @@ void autonomous() {
 	// go to next stack
 	robot->drive->chassis->getModel()->setMaxVelocity(130);
 	robot->runIntake(40);
-	robot->drive->chassis->moveDistance(-28_in);
+	robot->drive->chassis->moveDistance(-27.5_in);
 	robot->drive->chassis->turnAngle(100_deg);
 	robot->drive->chassis->getModel()->setMaxVelocity(100);
 	robot->runIntake(200);
@@ -111,16 +103,22 @@ void autonomous() {
 	// go to goal
 	// robot->drive->chassis->getModel()->setMaxVelocity(50);
 	// robot->drive->chassis->moveDistance(-10_in);
-	robot->drive->chassis->getModel()->setMaxVelocity(100);
+	robot->drive->chassis->getModel()->setMaxVelocity(50);
 	robot->runIntake(200);
-	robot->drive->chassis->turnAngle(-130_deg);
+	robot->drive->chassis->turnAngle(-150_deg);
+	robot->drive->chassis->getModel()->setMaxVelocity(100);
 	robot->drive->chassis->moveDistance(34_in);
 	robot->drive->chassis->getModel()->setMaxVelocity(100);
 	robot->runIntake(0);
 	robot->drive->chassis->getModel()->forward(30);
+	// std::valarray<std::int32_t> initVals = robot->drive->chassis->getModel()->getSensorVals();
 	robot->brakeEnable();
 	pros::delay(1000);
 	robot->drive->chassis->getModel()->stop();
+	// std::valarray<std::int32_t> endVals = robot->drive->chassis->getModel()->getSensorVals();
+
+	// if(init)
+
 	// score
 	robot->tiltFourbarScore(); // Contains a delay of 5000 millsecs
 	robot->drive->chassis->getModel()->forward(-40);

@@ -4,6 +4,8 @@
 #include "brainDriver.hpp"
 using namespace okapi;
 
+#define BLUE_ALLIANCE
+
 #define DRIVE_LEFT_FRONT 4
 #define DRIVE_LEFT_MID_FRONT 2
 #define DRIVE_LEFT_MID_BACK 3
@@ -68,6 +70,7 @@ class Hamburger {
 		void opControlIntake(pros::Controller& joystick);
 		void opControlFourbar(pros::Controller& joystick);
 		void opControlTrayBrake(pros::Controller& joystick);
+		void opControlTrayDeploy(pros::Controller& joystick);
 		void opControlArm(pros::Controller& joystick);
 		void opControl(pros::Controller& joystick);
 		void runIntake(int power);
@@ -76,6 +79,7 @@ class Hamburger {
 		void tiltFourbarRetract();
 		void brakeEnable();
 		void brakeDisable();
+		void deployTray();
 		std::shared_ptr<MotorGroup> trayBrake;
 		std::shared_ptr<MotorGroup> trayDeploy;
 };
