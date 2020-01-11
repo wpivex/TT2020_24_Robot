@@ -62,7 +62,9 @@ void competition_initialize() {}
 void autonomous() {
 	auto robot = Hamburger::getRobot();
 
+	#ifndef BLUE_ALLIANCE
 	robot->drive->chassis->setTurnsMirrored(true);
+	#endif
 
 	// deploy tray
 	robot->deployTray();

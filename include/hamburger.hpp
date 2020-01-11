@@ -4,7 +4,7 @@
 #include "brainDriver.hpp"
 using namespace okapi;
 
-// #define BLUE_ALLIANCE
+#define BLUE_ALLIANCE
 
 #define DRIVE_LEFT_FRONT 4
 #define DRIVE_LEFT_MID_FRONT 2

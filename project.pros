@@ -1,7 +1,7 @@
 {
     "py/object": "pros.conductor.project.Project",
     "py/state": {
-        "project_name": "TT2020_24_Robot",
+        "project_name": "BLUE_TT2020_24_Robot",
         "target": "v5",
         "templates": {
             "kernel": {
