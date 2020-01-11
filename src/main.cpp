@@ -62,6 +62,8 @@ void competition_initialize() {}
 void autonomous() {
 	auto robot = Hamburger::getRobot();
 
+	robot->drive->chassis->setTurnsMirrored(true);
+
 	// deploy tray
 	robot->deployTray();
 	// get four at start

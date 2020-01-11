@@ -32,10 +32,6 @@ Drive::Drive() {
               .withClosedLoopControllerTimeUtil(50, 5, 250_ms)
               .withOdometry(StateMode::CARTESIAN, 1_in, 5_deg, 0.0001_mps)
               .buildOdometry();
-
-  #ifndef BLUE_ALLIANCE
-  chassis->setTurnsMirrored(true);
-  #endif
 }
 
 void Drive::opControlDrive(pros::Controller& joystick) {

@@ -4,7 +4,7 @@
 #include "brainDriver.hpp"
 using namespace okapi;
 
-#define BLUE_ALLIANCE
+// #define BLUE_ALLIANCE
 
 #define DRIVE_LEFT_FRONT 4
 #define DRIVE_LEFT_MID_FRONT 2
@@ -52,7 +52,7 @@ class Hamburger {
 		double trayBrakeSetpoint = 0;
 
 		const double fourbarThreshold = 500;
-		const double FOURBAR_UP_VALUE = 1050;
+		const double FOURBAR_UP_VALUE = 1020;
 		const double FOURBAR_BRAKE_DISABLE_VALUE = 500;
 		const double FOURBAR_BRAKE_ENABLE_VALUE = 800;
 		const double FOURBAR_MARGIN_VALUE = 100;

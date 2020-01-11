@@ -86,8 +86,8 @@ void Hamburger::opControlFourbar(pros::Controller& joystick) {
 }
 
 void Hamburger::opControlArm(pros::Controller& joystick) {
-	int up = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
-	int down = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
+	int up = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_Y);
+	int down = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_B);
 	int buttonA = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
 	if (up) {
