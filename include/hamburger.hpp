@@ -4,6 +4,8 @@
 #include "brainDriver.hpp"
 using namespace okapi;
 
+#define BLUE_ALLIANCE
+
 #define DRIVE_LEFT_FRONT 4
 #define DRIVE_LEFT_MID_FRONT 2
 #define DRIVE_LEFT_MID_BACK 3
@@ -13,14 +15,20 @@ using namespace okapi;
 #define DRIVE_RIGHT_MID_BACK 8
 #define DRIVE_RIGHT_BACK 6
 
-#define INTAKE_LEFT 20
-#define INTAKE_RIGHT 19
+#define INTAKE_LEFT_BOT 20
+#define INTAKE_LEFT_TOP 16
+#define INTAKE_RIGHT_BOT 19
+#define INTAKE_RIGHT_TOP 15
 
-#define TRAY_BRAKE 5
+#define TRAY_DEPLOY 12
+#define TRAY_BRAKE 11
 // #define DISABLE_PASSIVE_TRAY
 
-#define FOURBAR 18
-#define FOURBAR2 17
+#define FOURBAR_LEFT 18
+#define FOURBAR_RIGHT 17
+
+#define ARM_GRIP 13
+#define ARM_LIFT 14
 
 #define ENCODER_LEFT_DRIVE_TOP 'a'
 #define ENCODER_LEFT_DRIVE_BOT 'b'
@@ -33,28 +41,28 @@ class Hamburger {
 		static Hamburger* robot;
 		std::shared_ptr<MotorGroup> intake;
 		std::shared_ptr<MotorGroup> fourbar;
-		std::shared_ptr<MotorGroup> trayBrake;
+		std::shared_ptr<MotorGroup> armLift;
+		std::shared_ptr<MotorGroup> armGrip;
 
 		Hamburger();
 
 		int lastUp = 0;
 		int lastDown = 0;
 
-		bool trayBrakeOn = false;
 		double trayBrakeSetpoint = 0;
 
 		const double fourbarThreshold = 500;
-		const double FOURBAR_UP_VALUE = 1050;
-		const double FOURBAR_BRAKE_DISABLE_VALUE = 800;
-		const double FOURBAR_MARGIN_VALUE = 10;
+		const double FOURBAR_UP_VALUE = 950;
+		const double FOURBAR_BRAKE_DISABLE_VALUE = 420;
+		const double FOURBAR_BRAKE_ENABLE_VALUE = 600;
+		const double FOURBAR_MARGIN_VALUE = 100;
 		const int FOURBAR_UP_MIN_VEL = 30;
-		const double FOURBAR_GAIN = 0.85;
+		const double FOURBAR_GAIN = 0.40;
 
-		const double BRAKE_MAX_SPEED = 75;
-		const double BRAKE_ENABLE_VALUE = 200;
+		const double BRAKE_MAX_SPEED = 50;
+		const double BRAKE_ENABLE_VALUE = 250;
 		const double BRAKE_DISABLE_VALUE = 0;
-		const double BRAKE_MARGIN_VALUE = 5;
-		const double BRAKE_STALL_CURRENT = 1900;
+		const double BRAKE_STALL_CURRENT = 2450;
 	public:
 		static Hamburger* getRobot();
 		std::shared_ptr<Drive> drive;
@@ -62,11 +70,17 @@ class Hamburger {
 		void opControlIntake(pros::Controller& joystick);
 		void opControlFourbar(pros::Controller& joystick);
 		void opControlTrayBrake(pros::Controller& joystick);
+		void opControlTrayDeploy(pros::Controller& joystick);
+		void opControlArm(pros::Controller& joystick);
 		void opControl(pros::Controller& joystick);
 		void runIntake(int power);
 		void moveFourbar(int power);
+		void moveFourbar2(int power);
 		void tiltFourbarScore();
 		void tiltFourbarRetract();
 		void brakeEnable();
 		void brakeDisable();
+		void deployTray();
+		std::shared_ptr<MotorGroup> trayBrake;
+		std::shared_ptr<MotorGroup> trayDeploy;
 };

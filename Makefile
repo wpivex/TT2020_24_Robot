@@ -13,8 +13,14 @@ SRCDIR=$(ROOT)/src
 INCDIR=$(ROOT)/include
 
 WARNFLAGS+=
+
+ifdef TEAM
+EXTRA_CFLAGS= -D $(TEAM)
+EXTRA_CXXFLAGS= -D $(TEAM)
+else
 EXTRA_CFLAGS=
 EXTRA_CXXFLAGS=
+endif
 
 # Set to 1 to enable hot/cold linking
 USE_PACKAGE:=1
@@ -36,7 +42,9 @@ EXCLUDE_SRC_FROM_LIB+=$(foreach file, $(SRCDIR)/main,$(foreach cext,$(CEXTS),$(f
 # whatever files you want here. This line is configured to add all header files
 # that are in the the include directory get exported
 TEMPLATE_FILES=$(INCDIR)/**/*.h $(INCDIR)/**/*.hpp
-
+ifdef TEAM
+$(info Alliance color is $(TEAM))
+endif
 $(info *********************************************)
 $(info *                                           *)
 $(info *       THIS IS CODE FOR THE 24 ROBOT       *)
