@@ -20,8 +20,7 @@ Drive::Drive() {
 
   chassis = ChassisControllerBuilder()
               .withMotors(leftMotors, rightMotors)
-              .withGearset(AbstractMotor::gearset::green)
-              .withDimensions({{3.25_in, 13.5_in},1024})
+              .withDimensions(AbstractMotor::gearset::green, {{3.25_in, 13.5_in},1024})
               .withGains(
                   // {0.0015, 0, 0.000005}, // Distance controller gains
                   {0.0015, 0, 0.000005}, // Distance controller gains
@@ -29,8 +28,8 @@ Drive::Drive() {
                   {0.0005, 0, 0.00000}  // angle controller gains (helps drive straight)
               )
               .withSensors(leftEncoder, rightEncoder)
-              .withClosedLoopControllerTimeUtil(50, 5, 500_ms)
-              .withOdometry(StateMode::CARTESIAN, 1_in, 5_deg, 0.0001_mps)
+              .withClosedLoopControllerTimeUtil(50, 5, 250_ms)
+              .withOdometry({{3.25_in, 13.5_in},1024}, StateMode::CARTESIAN, 1_in, 5_deg)
               .buildOdometry();
 }
 
@@ -40,8 +39,4 @@ void Drive::opControlDrive(pros::Controller& joystick) {
     double forward2 = (double)(joystick.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127;
     // Double stick
     this->chassis->model().arcade(forward, turn);
-    // single stick
-    // this->chassis->model().arcade(forward2, turn);
-    // Tank
-    // this->chassis->model().tank(forward, forward2);
 }
