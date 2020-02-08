@@ -20,7 +20,9 @@ Hamburger::Hamburger() {
 	drive = std::make_shared<Drive>(left, right);
 
 	MotorGroup intakeMotors({Motor(INTAKE_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-							 Motor(INTAKE_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+							 Motor(INTAKE_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+							 Motor(INTAKE_BACK_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+						 	 Motor(INTAKE_BACK_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
 	intakeMotors.setBrakeMode(AbstractMotor::brakeMode::brake);
 	intake = std::make_shared<MotorGroup>(intakeMotors);
 
