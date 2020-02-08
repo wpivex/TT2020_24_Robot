@@ -5,14 +5,14 @@ Drive::Drive(okapi::MotorGroup leftMotors, okapi::MotorGroup rightMotors) {
     rightMotors.setBrakeMode(AbstractMotor::brakeMode::coast);
     chassis = ChassisControllerBuilder()
                 .withMotors(leftMotors, rightMotors)
-                .withGearset(AbstractMotor::gearset::green)
-                .withDimensions({{3.25_in, 13.5_in},imev5GreenTPR})
+                // .withGearset(AbstractMotor::gearset::green)
+                .withDimensions(AbstractMotor::gearset::green, {{3.25_in, 13.5_in},imev5GreenTPR})
                 .withGains(
                     {0.001, 0, 0.0001}, // Distance controller gains
                     {0.001, 0, 0.0001}, // Turn controller gains
                     {0.001, 0, 0.0001}  // Angle controller gains (helps drive straight)
                 )
-                .withOdometry(StateMode::CARTESIAN, 0_mm, 0_deg, 0.0001_mps)
+                .withOdometry({{3.25_in, 13.5_in},imev5GreenTPR}, StateMode::CARTESIAN, 0_mm, 0_deg)
                 .buildOdometry();
 }
 
