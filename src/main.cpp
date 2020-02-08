@@ -1,21 +1,6 @@
 #include "main.h"
 #include "hamburger.hpp"
-
-/**
- * A callback function for LLEMU's center button.
- *
- * When this callback is fired, it will toggle line 2 of the LCD text between
- * "I was pressed!" and nothing.
- */
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
-}
+#include "menu/Menu.hpp"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -24,10 +9,6 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
-
-	pros::lcd::register_btn1_cb(on_center_button);
 }
 
 /**
@@ -63,17 +44,15 @@ void competition_initialize() {}
  */
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
+	auto menu = Menu::getMenu();
 	auto robot = Hamburger::getRobot();
-	// ADIEncoder encL(ENCODER_LEFT_DRIVE_TOP,ENCODER_LEFT_DRIVE_BOT,false);
-	// ADIEncoder encR(ENCODER_RIGHT_DRIVE_TOP,ENCODER_RIGHT_DRIVE_BOT,true);
-	// encL.reset();
-	// encR.reset();
+
+	char lcdText[30];
 
 	while (true) {
 		robot->opControl(master);
-		std::valarray<std::int32_t> vals = robot->drive->chassis->getModel()->getSensorVals();
-		pros::lcd::set_text(1, "Left Enc: " + std::to_string(vals[0]));
-		pros::lcd::set_text(2, "Right Enc: " + std::to_string(vals[1]));
+		menu->printTerminal("Nice");
+		menu->addDebugPrint(2, "Nice");
 		pros::delay(20);
 	}
 }

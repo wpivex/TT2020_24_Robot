@@ -15,25 +15,21 @@ using namespace okapi;
 #define DRIVE_RIGHT_MID_BACK 8
 #define DRIVE_RIGHT_BACK 6
 
-#define INTAKE_LEFT_BOT 20
-#define INTAKE_LEFT_TOP 16
-#define INTAKE_RIGHT_BOT 19
-#define INTAKE_RIGHT_TOP 15
-
-#define TRAY_DEPLOY 12
-#define TRAY_BRAKE 11
-// #define DISABLE_PASSIVE_TRAY
+#define INTAKE_LEFT 20
+#define INTAKE_RIGHT 19
+#define INTAKE_BACK_LEFT 16
+#define INTAKE_BACK_RIGHT 15
 
 #define FOURBAR_LEFT 18
 #define FOURBAR_RIGHT 17
-
-#define ARM_GRIP 13
-#define ARM_LIFT 14
 
 #define ENCODER_LEFT_DRIVE_TOP 'a'
 #define ENCODER_LEFT_DRIVE_BOT 'b'
 #define ENCODER_RIGHT_DRIVE_TOP 'c'
 #define ENCODER_RIGHT_DRIVE_BOT 'd'
+
+#define ARM_LEFT 14
+#define ARM_RIGHT 13
 
 
 class Hamburger {
@@ -41,9 +37,7 @@ class Hamburger {
 		static Hamburger* robot;
 		std::shared_ptr<MotorGroup> intake;
 		std::shared_ptr<MotorGroup> fourbar;
-		std::shared_ptr<MotorGroup> armLift;
-		std::shared_ptr<MotorGroup> armGrip;
-
+		std::shared_ptr<MotorGroup> arm;
 		Hamburger();
 
 		int lastUp = 0;
@@ -69,8 +63,6 @@ class Hamburger {
 		std::shared_ptr<BrainDriver> brainDriver;
 		void opControlIntake(pros::Controller& joystick);
 		void opControlFourbar(pros::Controller& joystick);
-		void opControlTrayBrake(pros::Controller& joystick);
-		void opControlTrayDeploy(pros::Controller& joystick);
 		void opControlArm(pros::Controller& joystick);
 		void opControl(pros::Controller& joystick);
 		void runIntake(int power);
@@ -78,9 +70,5 @@ class Hamburger {
 		void moveFourbar2(int power);
 		void tiltFourbarScore();
 		void tiltFourbarRetract();
-		void brakeEnable();
-		void brakeDisable();
-		void deployTray();
-		std::shared_ptr<MotorGroup> trayBrake;
-		std::shared_ptr<MotorGroup> trayDeploy;
+		void moveArm(int power);
 };
