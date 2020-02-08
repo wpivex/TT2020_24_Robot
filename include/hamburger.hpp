@@ -18,12 +18,16 @@ using namespace okapi;
 
 #define FOURBAR 18
 
+#define ARM_LEFT 14
+#define ARM_RIGHT 13
+
 
 class Hamburger {
 	private:
 		static Hamburger* robot;
 		std::shared_ptr<MotorGroup> intake;
 		std::shared_ptr<MotorGroup> fourbar;
+		std::shared_ptr<MotorGroup> arm;
 		Hamburger();
 	public:
 		static Hamburger* getRobot();
@@ -31,7 +35,9 @@ class Hamburger {
 		std::shared_ptr<BrainDriver> brainDriver;
 		void opControlIntake(pros::Controller& joystick);
 		void opControlFourbar(pros::Controller& joystick);
+		void opControlArm(pros::Controller& joystick);
 		void opControl(pros::Controller& joystick);
 		void runIntake(int power);
 		void moveFourbar(int power);
+		void moveArm(int power);
 };
