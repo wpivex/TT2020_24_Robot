@@ -44,7 +44,6 @@ class HeLied {
 		std::shared_ptr<Drive> drive;
 		std::shared_ptr<Lift> lift;
 		std::shared_ptr<Tilter> tilter;
-		std::shared_ptr<BrainDriver> brainDriver;
 		std::shared_ptr<MotorGroup> frontIntake;
 		std::shared_ptr<MotorGroup> backIntake;
 
