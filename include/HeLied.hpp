@@ -1,7 +1,8 @@
 #pragma once
 #include "main.h"
-#include "drive.hpp"
-#include "brainDriver.hpp"
+#include "Drive.hpp"
+#include "BrainDriver.hpp"
+#include "Lift.hpp"
 using namespace okapi;
 
 #define BLUE_ALLIANCE
@@ -32,18 +33,15 @@ using namespace okapi;
 #define ARM_RIGHT 13
 
 
-class Hamburger {
+class HeLied {
 	private:
-		static Hamburger* robot;
+		static HeLied* robot;
 		std::shared_ptr<MotorGroup> intake;
 		std::shared_ptr<MotorGroup> fourbar;
-		std::shared_ptr<MotorGroup> arm;
-		Hamburger();
+		HeLied();
 
 		int lastUp = 0;
 		int lastDown = 0;
-
-		double trayBrakeSetpoint = 0;
 
 		const double fourbarThreshold = 500;
 		const double FOURBAR_UP_VALUE = 950;
@@ -52,23 +50,18 @@ class Hamburger {
 		const double FOURBAR_MARGIN_VALUE = 100;
 		const int FOURBAR_UP_MIN_VEL = 30;
 		const double FOURBAR_GAIN = 0.40;
-
-		const double BRAKE_MAX_SPEED = 50;
-		const double BRAKE_ENABLE_VALUE = 250;
-		const double BRAKE_DISABLE_VALUE = 0;
-		const double BRAKE_STALL_CURRENT = 2450;
+		
 	public:
-		static Hamburger* getRobot();
+		static HeLied* getRobot();
 		std::shared_ptr<Drive> drive;
+		std::shared_ptr<Lift> lift;
 		std::shared_ptr<BrainDriver> brainDriver;
 		void opControlIntake(pros::Controller& joystick);
 		void opControlFourbar(pros::Controller& joystick);
-		void opControlArm(pros::Controller& joystick);
 		void opControl(pros::Controller& joystick);
 		void runIntake(int power);
 		void moveFourbar(int power);
 		void moveFourbar2(int power);
 		void tiltFourbarScore();
 		void tiltFourbarRetract();
-		void moveArm(int power);
 };

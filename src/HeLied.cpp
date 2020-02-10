@@ -1,15 +1,17 @@
-#include "hamburger.hpp"
+#include "HeLied.hpp"
 
-Hamburger *Hamburger::robot = NULL;
-Hamburger *Hamburger::getRobot() {
+HeLied *HeLied::robot = NULL;
+HeLied *HeLied::getRobot() {
 	if (robot == NULL) {
-		robot = new Hamburger();
+		robot = new HeLied();
 	}
 	return robot;
 }
 
-Hamburger::Hamburger() {
+HeLied::HeLied() {
 	drive = std::make_shared<Drive>();
+	lift = std::make_shared<Lift>();
+
 	MotorGroup intakeMotors({Motor(INTAKE_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
 							 Motor(INTAKE_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
 							 Motor(INTAKE_BACK_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
@@ -21,27 +23,21 @@ Hamburger::Hamburger() {
 							Motor(FOURBAR_RIGHT, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
 	});
 	fourbar = std::make_shared<MotorGroup>(fourbarMotors);
-
-	MotorGroup armMotors({Motor(ARM_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-		Motor(ARM_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
-	armMotors.setBrakeMode(AbstractMotor::brakeMode::brake);
-	arm = std::make_shared<MotorGroup>(armMotors);
-
 }
 
-void Hamburger::opControl(pros::Controller &joystick) {
+void HeLied::opControl(pros::Controller &joystick) {
 	drive->opControlDrive(joystick);
+	lift->opControl(joystick);
 	opControlFourbar(joystick);
 	opControlIntake(joystick);
-	opControlArm(joystick);
 }
 
 
-void Hamburger::runIntake(int power) {
+void HeLied::runIntake(int power) {
 	intake->moveVelocity(power);
 }
 
-void Hamburger::opControlIntake(pros::Controller &joystick) {
+void HeLied::opControlIntake(pros::Controller &joystick) {
 	int r1 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
 	int r2 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
 
@@ -56,7 +52,7 @@ void Hamburger::opControlIntake(pros::Controller &joystick) {
 	}
 }
 
-void Hamburger::opControlFourbar(pros::Controller& joystick) {
+void HeLied::opControlFourbar(pros::Controller& joystick) {
 	if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
 		moveFourbar2(100);
 	} else if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
@@ -66,17 +62,7 @@ void Hamburger::opControlFourbar(pros::Controller& joystick) {
 	}
 }
 
-void Hamburger::opControlArm(pros::Controller& joystick) {
-	if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
-		moveArm(100);
-	} else if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
-		moveArm(-100);
-	} else {
-		moveArm(0);
-	}
-}
-
-void Hamburger::moveFourbar(int power) {
+void HeLied::moveFourbar(int power) {
 	// if going up, throttle the value
 	if(power > 0) {
 		double fourbarPos = fourbar->getPosition();
@@ -99,7 +85,7 @@ void Hamburger::moveFourbar(int power) {
 	}
 }
 
-void Hamburger::moveFourbar2(int power) {
+void HeLied::moveFourbar2(int power) {
 	if(power > 0) {
 		double numerator = FOURBAR_UP_VALUE - fourbar->getPosition() * 9 / 10;
 		double ratio = (double)(abs(numerator)) / FOURBAR_UP_VALUE;
@@ -111,7 +97,7 @@ void Hamburger::moveFourbar2(int power) {
 	}
 }
 
-void Hamburger::tiltFourbarScore() {
+void HeLied::tiltFourbarScore() {
 	fourbar->tarePosition();
 
 	for(int i = 0; i < 56; i++) {
@@ -135,11 +121,7 @@ void Hamburger::tiltFourbarScore() {
 	pros::delay(500);
 }
 
-void Hamburger::tiltFourbarRetract() {
+void HeLied::tiltFourbarRetract() {
 	// fourbar->tarePosition();
 	fourbar->moveAbsolute(0,100);
-}
-
-void Hamburger::moveArm(int power) {
-	arm->moveVelocity(power);
 }

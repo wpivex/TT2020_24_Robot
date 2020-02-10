@@ -1,14 +1,14 @@
-#include "brainDriver.hpp"
-#include "hamburger.hpp"
+#include "BrainDriver.hpp"
+#include "HeLied.hpp"
 
 #define MAX_BUFFER 35
 
 BrainDriver::BrainDriver() {
-    pros::Task task(asyncReadSerialTask,Hamburger::getRobot(),"SerialReadTask");
+    pros::Task task(asyncReadSerialTask,HeLied::getRobot(),"SerialReadTask");
 }
 
 void BrainDriver::asyncReadSerialTask(void* param) {
-    Hamburger* robot = (Hamburger*)param;
+    HeLied* robot = (HeLied*)param;
     char buffer[MAX_BUFFER];
     while(true) {
         // We will always write out 35 bytes of data.

@@ -1,5 +1,5 @@
 #include "main.h"
-#include "hamburger.hpp"
+#include "HeLied.hpp"
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -13,7 +13,7 @@
  * from where it left off.
  */
 void autonomous() {
-	auto robot = Hamburger::getRobot();
+	auto robot = HeLied::getRobot();
 
 	#ifdef BLUE
 	robot->drive->chassis->setTurnsMirrored(false);
@@ -22,4 +22,6 @@ void autonomous() {
 	#ifdef RED
 	robot->drive->chassis->setTurnsMirrored(true);
 	#endif
+
+	// Deploy tray
 }
