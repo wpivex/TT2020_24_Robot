@@ -1,5 +1,5 @@
 #include "main.h"
-#include "hamburger.hpp"
+#include "HeLied.hpp"
 #include "menu/Menu.hpp"
 
 /**
@@ -9,6 +9,7 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+	Menu::getMenu();
 }
 
 /**
@@ -27,7 +28,7 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() { Menu::getMenu(); }
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -45,9 +46,7 @@ void competition_initialize() {}
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	auto menu = Menu::getMenu();
-	auto robot = Hamburger::getRobot();
-
-	char lcdText[30];
+	auto robot = HeLied::getRobot();
 
 	while (true) {
 		robot->opControl(master);
