@@ -12,29 +12,33 @@ HeLied::HeLied() {
 	drive = std::make_shared<Drive>();
 	lift = std::make_shared<Lift>();
 
-	MotorGroup intakeMotors({Motor(INTAKE_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-							 Motor(INTAKE_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-							 Motor(INTAKE_BACK_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+	MotorGroup frontIntakeMotors({Motor(INTAKE_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+							 Motor(INTAKE_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+	MotorGroup backIntakeMotors({ Motor(INTAKE_BACK_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
 						 	 Motor(INTAKE_BACK_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
-	intakeMotors.setBrakeMode(AbstractMotor::brakeMode::brake);
-	intake = std::make_shared<MotorGroup>(intakeMotors);
+	frontIntake = std::make_shared<MotorGroup>(frontIntakeMotors);
+	backIntake = std::make_shared<MotorGroup>(backIntakeMotors);
 
-	MotorGroup fourbarMotors({Motor(FOURBAR_LEFT, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
-							Motor(FOURBAR_RIGHT, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
-	});
-	fourbar = std::make_shared<MotorGroup>(fourbarMotors);
+	frontIntake->setBrakeMode(okapi::AbstractMotor::brakeMode::brake);
+	backIntake->setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 }
 
 void HeLied::opControl(pros::Controller &joystick) {
 	drive->opControlDrive(joystick);
 	lift->opControl(joystick);
-	opControlFourbar(joystick);
+	tilter->opControl(joystick);
 	opControlIntake(joystick);
 }
 
 
 void HeLied::runIntake(int power) {
-	intake->moveVelocity(power);
+	if(power != 0) {
+		frontIntake->moveVelocity(power);
+		backIntake->moveVelocity(power);
+	} else {
+		frontIntake->moveVelocity(power);
+		backIntake->moveVelocity(10);
+	}
 }
 
 void HeLied::opControlIntake(pros::Controller &joystick) {
@@ -52,76 +56,3 @@ void HeLied::opControlIntake(pros::Controller &joystick) {
 	}
 }
 
-void HeLied::opControlFourbar(pros::Controller& joystick) {
-	if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-		moveFourbar2(100);
-	} else if (joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-		moveFourbar2(-100);
-	} else {
-		moveFourbar2(0);
-	}
-}
-
-void HeLied::moveFourbar(int power) {
-	// if going up, throttle the value
-	if(power > 0) {
-		double fourbarPos = fourbar->getPosition();
-		double numerator = (FOURBAR_UP_VALUE - fourbarPos) * FOURBAR_GAIN;
-		double ratio = (double)(abs(numerator)) / FOURBAR_UP_VALUE;
-		int velocity = power * ratio;
-
-		if(fourbarPos >= FOURBAR_UP_VALUE) {
-			velocity = 0.0;
-		}
-		else if(velocity < FOURBAR_UP_MIN_VEL) {
-			velocity = FOURBAR_UP_MIN_VEL;
-		}
-
-		fourbar->moveVelocity(velocity);
-
-	} else {
-		// full speed down
-		fourbar->moveVelocity(power);
-	}
-}
-
-void HeLied::moveFourbar2(int power) {
-	if(power > 0) {
-		double numerator = FOURBAR_UP_VALUE - fourbar->getPosition() * 9 / 10;
-		double ratio = (double)(abs(numerator)) / FOURBAR_UP_VALUE;
-		fourbar->moveVelocity(power * ratio);
-
-	} else {
-		// full speed down
-		fourbar->moveVelocity(power);
-	}
-}
-
-void HeLied::tiltFourbarScore() {
-	fourbar->tarePosition();
-
-	for(int i = 0; i < 56; i++) {
-		// double numerator = (FOURBAR_UP_VALUE - fourbar->getPosition()) * FOURBAR_GAIN;
-		// double ratio = (double)(abs(numerator)) / FOURBAR_UP_VALUE;
-		// int velocity = 100 * ratio;
-		
-
-		// if(velocity < FOURBAR_UP_MIN_VEL) {
-		// 	velocity = FOURBAR_UP_MIN_VEL;
-		// }
-		// fourbar->moveVelocity(velocity);
-
-		double numerator = FOURBAR_UP_VALUE - fourbar->getPosition() * 9 / 10;
-		double ratio = (double)(abs(numerator)) / FOURBAR_UP_VALUE;
-		fourbar->moveVelocity(100 * ratio);
-
-		pros::delay(100);
-	}
-
-	pros::delay(500);
-}
-
-void HeLied::tiltFourbarRetract() {
-	// fourbar->tarePosition();
-	fourbar->moveAbsolute(0,100);
-}

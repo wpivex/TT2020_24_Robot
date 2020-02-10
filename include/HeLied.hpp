@@ -3,6 +3,7 @@
 #include "Drive.hpp"
 #include "BrainDriver.hpp"
 #include "Lift.hpp"
+#include "Tilter.hpp"
 using namespace okapi;
 
 #define BLUE_ALLIANCE
@@ -36,32 +37,18 @@ using namespace okapi;
 class HeLied {
 	private:
 		static HeLied* robot;
-		std::shared_ptr<MotorGroup> intake;
-		std::shared_ptr<MotorGroup> fourbar;
 		HeLied();
-
-		int lastUp = 0;
-		int lastDown = 0;
-
-		const double fourbarThreshold = 500;
-		const double FOURBAR_UP_VALUE = 950;
-		const double FOURBAR_BRAKE_DISABLE_VALUE = 420;
-		const double FOURBAR_BRAKE_ENABLE_VALUE = 600;
-		const double FOURBAR_MARGIN_VALUE = 100;
-		const int FOURBAR_UP_MIN_VEL = 30;
-		const double FOURBAR_GAIN = 0.40;
 		
 	public:
 		static HeLied* getRobot();
 		std::shared_ptr<Drive> drive;
 		std::shared_ptr<Lift> lift;
+		std::shared_ptr<Tilter> tilter;
 		std::shared_ptr<BrainDriver> brainDriver;
+		std::shared_ptr<MotorGroup> frontIntake;
+		std::shared_ptr<MotorGroup> backIntake;
+
 		void opControlIntake(pros::Controller& joystick);
-		void opControlFourbar(pros::Controller& joystick);
 		void opControl(pros::Controller& joystick);
 		void runIntake(int power);
-		void moveFourbar(int power);
-		void moveFourbar2(int power);
-		void tiltFourbarScore();
-		void tiltFourbarRetract();
 };
