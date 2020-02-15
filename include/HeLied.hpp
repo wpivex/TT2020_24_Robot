@@ -25,10 +25,10 @@ using namespace okapi;
 #define FOURBAR_LEFT 18
 #define FOURBAR_RIGHT 17
 
-#define ENCODER_LEFT_DRIVE_TOP 'a'
-#define ENCODER_LEFT_DRIVE_BOT 'b'
-#define ENCODER_RIGHT_DRIVE_TOP 'c'
-#define ENCODER_RIGHT_DRIVE_BOT 'd'
+#define ENCODER_LEFT_DRIVE_TOP 'g'
+#define ENCODER_LEFT_DRIVE_BOT 'h'
+#define ENCODER_RIGHT_DRIVE_TOP 'e'
+#define ENCODER_RIGHT_DRIVE_BOT 'f'
 
 #define ARM_LEFT 14
 #define ARM_RIGHT 13
@@ -38,7 +38,7 @@ class HeLied {
 	private:
 		static HeLied* robot;
 		HeLied();
-		
+
 	public:
 		static HeLied* getRobot();
 		std::shared_ptr<Drive> drive;
