@@ -13,10 +13,10 @@ HeLied::HeLied() {
 	lift = std::make_shared<Lift>();
 	tilter = std::make_shared<Tilter>();
 
-	MotorGroup frontIntakeMotors({Motor(INTAKE_LEFT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-							 Motor(INTAKE_RIGHT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
-	MotorGroup backIntakeMotors({ Motor(INTAKE_BACK_LEFT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-						 	 Motor(INTAKE_BACK_RIGHT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+	MotorGroup frontIntakeMotors({Motor(INTAKE_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+							 Motor(INTAKE_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+	MotorGroup backIntakeMotors({ Motor(INTAKE_BACK_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+						 	 Motor(INTAKE_BACK_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
 	frontIntake = std::make_shared<MotorGroup>(frontIntakeMotors);
 	backIntake = std::make_shared<MotorGroup>(backIntakeMotors);
 
@@ -54,16 +54,16 @@ void HeLied::opControlIntake(pros::Controller &joystick) {
 	int down = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
 	int up = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
 
-	if (r2) {
+	if (r1) {
 		runIntake(200);
 	}
-	else if (r1) {
+	else if (r2) {
 		runIntake(-200);
 	}
 	else if (down){
-		runIntake(0);
+		runIntake(-200, 0);
 	} else if(up) {
-
+		runIntake(200, 0);
 	} else { 
 		runIntake(0);
 	}

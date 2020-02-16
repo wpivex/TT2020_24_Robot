@@ -7,7 +7,8 @@ using namespace okapi;
 class Drive {
 	public:
 		Drive();
-		std::shared_ptr<okapi::OdomChassisController> chassis;
+		std::shared_ptr<okapi::DefaultOdomChassisController> chassis;
+		std::shared_ptr<okapi::ChassisControllerPID> chassisPID;
 		void opControlDrive(pros::Controller& joystick);
 
 	private:

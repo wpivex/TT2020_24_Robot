@@ -23,5 +23,16 @@ void autonomous() {
 	robot->drive->chassis->setTurnsMirrored(true);
 	#endif
 
+	robot->drive->chassis->setMaxVelocity(150);
+	robot->drive->chassis->moveDistance(24_in);
+	robot->runIntake(200);
+	robot->drive->chassisPID->setGains(
+		{0.0021, 0, 0.000042}, // Distance controller gains
+        {0.005, 0, 0.000}, // Turn controller gains
+        {0.001, 0, 0.0001}  // Angle controller gains (helps drive straight)
+	);
+	robot->drive->chassis->moveDistance(24_in);
+
 	// Deploy tray
+
 }
