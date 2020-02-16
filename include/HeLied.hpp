@@ -49,5 +49,5 @@ class HeLied {
 
 		void opControlIntake(pros::Controller& joystick);
 		void opControl(pros::Controller& joystick);
-		void runIntake(int power);
+		void runIntake(int power, int set=-1);
 };

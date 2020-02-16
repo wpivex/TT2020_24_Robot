@@ -4,7 +4,7 @@
 Lift::Lift() {
     MotorGroup arm({Motor(ARM_LEFT, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
 		Motor(ARM_RIGHT, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees)});
-	arm.setBrakeMode(AbstractMotor::brakeMode::hold);
+	arm.setBrakeMode(AbstractMotor::brakeMode::brake);
     armMotors = std::make_shared<MotorGroup>(arm);
     armMotors->tarePosition();
 }

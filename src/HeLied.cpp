@@ -32,20 +32,27 @@ void HeLied::opControl(pros::Controller &joystick) {
 }
 
 
-void HeLied::runIntake(int power) {
-	if(power != 0) {
-		frontIntake->moveVelocity(power);
-		backIntake->moveVelocity(power);
-	} else {
-		frontIntake->moveVelocity(power);
-		backIntake->moveVelocity(power);
-		// backIntake->moveVelocity(10);
+// Runs specific set of intakes. 0 = only front, 1 = only back, anything else = false
+void HeLied::runIntake(int power, int set) {
+	switch(set) {
+		case 0:
+			frontIntake->moveVelocity(power);
+			break;
+		case 1:
+			backIntake->moveVelocity(power);
+			break;
+		default:
+			frontIntake->moveVelocity(power);
+			backIntake->moveVelocity(power);
+			break;
 	}
 }
 
 void HeLied::opControlIntake(pros::Controller &joystick) {
 	int r1 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
 	int r2 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
+	int down = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
+	int up = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
 
 	if (r2) {
 		runIntake(200);
@@ -53,7 +60,11 @@ void HeLied::opControlIntake(pros::Controller &joystick) {
 	else if (r1) {
 		runIntake(-200);
 	}
-	else {
+	else if (down){
+		runIntake(0);
+	} else if(up) {
+
+	} else { 
 		runIntake(0);
 	}
 }
