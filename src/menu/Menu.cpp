@@ -67,7 +67,7 @@ void Menu::constructTabview() {
     tabInfo = lv_tabview_add_tab(tabview, "Info");
     tabDebug = lv_tabview_add_tab(tabview, "Debug");
     tabTerminal = lv_tabview_add_tab(tabview, "Terminal");
-    tabYus = lv_tabview_add_tab(tabview, "yus");
+    // tabYus = lv_tabview_add_tab(tabview, "yus");
 
 
     // Style the tab buttons
@@ -98,5 +98,6 @@ void Menu::constructTerminalPage() {
 }
 
 void Menu::constructYusPage() {
-    
-}
+    lv_obj_t *yus = lv_img_create(tabYus, NULL);
+    lv_img_set_src(yus, &orange);
+} 
