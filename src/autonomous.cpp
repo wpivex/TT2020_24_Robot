@@ -31,7 +31,8 @@ void autonomous() {
 	#endif
 
 	robot->drive->chassis->setMaxVelocity(150);
-	robot->drive->chassis->moveDistance(24_in);
+	// robot->drive->chassis->moveDistance(24_in);
+	robot->drive->chassis->turnAngle(90_deg);
 	robot->runIntake(200);
 
 	// Deploy tray

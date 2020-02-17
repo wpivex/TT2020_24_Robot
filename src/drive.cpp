@@ -23,7 +23,7 @@ Drive::Drive() {
                 .withDimensions(AbstractMotor::gearset::green, {{3.25_in, 13.5_in},1024})
                 .withGains(
                     {0.0021, 0, 0.00003}, // Distance controller gains
-                    {0.005, 0, 0.000}, // Turn controller gains
+                    {0.002, 0, 0.00003}, // Turn controller gains
                     {0.001, 0, 0.0001}  // Angle controller gains (helps drive straight)
                 )
                 .withSensors(leftEncoder, rightEncoder)
