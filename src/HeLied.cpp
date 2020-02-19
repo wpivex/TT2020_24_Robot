@@ -25,12 +25,28 @@ HeLied::HeLied() {
 }
 
 void HeLied::opControl(pros::Controller &joystick) {
+	opControlCheck(joystick);
 	drive->opControlDrive(joystick);
-	lift->opControl(joystick);
-	tilter->opControl(joystick);
+	switch(armMode) {
+		case ARM:
+			lift->opControl(joystick);
+			break;
+		case TILTER:
+			tilter->opControl(joystick);
+			break;
+	}
 	opControlIntake(joystick);
 }
 
+
+void HeLied::opControlCheck(pros::Controller& joystick) {
+	int a = joystick.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A);
+	if(a && a != lastToggleA) {
+		armMode = (ArmMode)((armMode + 1) % 2);
+		joystick.rumble("-");
+	}
+	lastToggleA = a;
+}
 
 // Runs specific set of intakes. 0 = only front, 1 = only back, anything else = false
 void HeLied::runIntake(int power, int set) {
@@ -54,18 +70,29 @@ void HeLied::opControlIntake(pros::Controller &joystick) {
 	int down = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
 	int up = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
 
-	if (r1) {
-		runIntake(200);
-	}
-	else if (r2) {
-		runIntake(-200);
-	}
-	else if (down){
-		runIntake(-200, 0);
-	} else if(up) {
-		runIntake(200, 0);
-	} else { 
-		runIntake(0);
+	switch(armMode) {
+		case ARM:
+			if (r1) {
+				runIntake(200, 0);
+				runIntake(200, 1);
+			}
+			else if (r2) {
+				runIntake(-200, 0);
+				runIntake(200, 1);
+			} else {
+				runIntake(0);
+			}
+			break;
+		case TILTER:
+			if (r1) {
+				runIntake(200);
+			}
+			else if (r2) {
+				runIntake(-200);
+			} else {
+				runIntake(0);
+			}
+			break;
 	}
 }
 

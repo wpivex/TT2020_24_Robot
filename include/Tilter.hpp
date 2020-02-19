@@ -5,8 +5,8 @@ using namespace okapi;
 
 class Tilter {
     private:
-		const double FOURBAR_UP_VALUE = 950;
-		const int FOURBAR_UP_MIN_VEL = 25;
+		const double FOURBAR_UP_VALUE = 850;
+		const int FOURBAR_UP_MIN_VEL = 5;
 		const double FOURBAR_GAIN = 0.3;
 
     public:

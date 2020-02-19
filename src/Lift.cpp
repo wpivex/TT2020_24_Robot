@@ -10,8 +10,8 @@ Lift::Lift() {
 }
 
 void Lift::opControl(pros::Controller& joystick) {
-    int x = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_X);
-    int b = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_B);
+    int x = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
+    int b = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
     if(x) {
         moveLift(100);
     } else if(b) {

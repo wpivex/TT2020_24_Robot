@@ -33,11 +33,20 @@ using namespace okapi;
 #define ARM_LEFT 14
 #define ARM_RIGHT 13
 
+enum ArmMode {
+	ARM,
+	TILTER
+};
 
 class HeLied {
 	private:
 		static HeLied* robot;
 		HeLied();
+		// 0 = arm mode, 1 = tilter mode
+		ArmMode armMode = TILTER;
+		int lastToggleA = 0;
+
+		void opControlCheck(pros::Controller& joystick);
 
 	public:
 		static HeLied* getRobot();
