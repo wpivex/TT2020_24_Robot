@@ -1,5 +1,6 @@
 #include "Lift.hpp"
 #include "HeLied.hpp"
+#include "menu/Menu.hpp"
 
 Lift::Lift() {
     MotorGroup arm({Motor(ARM_LEFT, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
@@ -19,6 +20,7 @@ void Lift::opControl(pros::Controller& joystick) {
     } else {
         moveLift(0);
     }
+    Menu::getMenu()->addDebugPrint(6, "Arm Pos:" + std::to_string(armMotors->getPosition()));
 }
 
 void Lift::moveLift(int power) {

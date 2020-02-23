@@ -32,6 +32,7 @@ void Tilter::opControl(pros::Controller& joystick) {
     // release tray
     // printf("Current: %d\n", slider->getCurrentDraw());
     Menu::getMenu()->addDebugPrint(4, "Current:" + std::to_string(slider->getCurrentDraw()));
+    Menu::getMenu()->addDebugPrint(5, "Tray Pos:" + std::to_string(slider->getPosition()));
     if(y) {
         moveTraySliderVel(150);
     } else if (x) {
@@ -44,7 +45,11 @@ void Tilter::moveFourbar(int power) {
 	moveTraySliderVoltage(5000, 100);
         double curr = fourbar->getPosition();
         double diff = FOURBAR_UP_VALUE - curr;
-        int velocity = FOURBAR_GAIN * diff;
+	float gain = FOURBAR_GAIN;
+	if (slider->getPosition() < 150){
+		gain = gain * .4;
+	} 
+        int velocity = gain * diff;
         // Add constraints
         velocity = velocity < FOURBAR_UP_MIN_VEL ? FOURBAR_UP_MIN_VEL : velocity;
         velocity = velocity >= power ? power : velocity;
