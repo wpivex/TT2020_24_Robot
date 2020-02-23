@@ -16,8 +16,8 @@ class Tilter {
         void moveFourbar(int power);
         void tiltScore();
         void tiltRetract();
-        void moveTraySliderVoltage(int voltage);
-        void moveTraySliderVel(int vel);
+        void moveTraySliderVoltage(int voltage, int current=300);
+        void moveTraySliderVel(int vel, int current=12000);
 
 
         std::shared_ptr<MotorGroup> fourbar;

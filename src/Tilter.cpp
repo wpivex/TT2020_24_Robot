@@ -33,14 +33,15 @@ void Tilter::opControl(pros::Controller& joystick) {
     // printf("Current: %d\n", slider->getCurrentDraw());
     Menu::getMenu()->addDebugPrint(4, "Current:" + std::to_string(slider->getCurrentDraw()));
     if(y) {
-        moveTraySliderVel(200);
+        moveTraySliderVel(150);
     } else if (x) {
-        moveTraySliderVel(-200);
+        moveTraySliderVel(-150);
     }
 }
 
 void Tilter::moveFourbar(int power) {
     if(power > 0) {
+	moveTraySliderVoltage(5000, 100);
         double curr = fourbar->getPosition();
         double diff = FOURBAR_UP_VALUE - curr;
         int velocity = FOURBAR_GAIN * diff;
@@ -53,12 +54,12 @@ void Tilter::moveFourbar(int power) {
     }
 }
 
-void Tilter::moveTraySliderVoltage(int voltage) {
-    slider->setCurrentLimit(300);
+void Tilter::moveTraySliderVoltage(int voltage, int cur) {
+    slider->setCurrentLimit(cur);
     slider->moveVoltage(voltage);
 }
 
-void Tilter::moveTraySliderVel(int vel) {
-    slider->setCurrentLimit(12000);
+void Tilter::moveTraySliderVel(int vel, int cur) {
+    slider->setCurrentLimit(cur);
     slider->moveVelocity(vel);
 }
