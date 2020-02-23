@@ -1,4 +1,4 @@
-#include "BrainDriver.hpp"
+#include "brainDriver.hpp"
 #include "HeLied.hpp"
 
 #define MAX_BUFFER 35

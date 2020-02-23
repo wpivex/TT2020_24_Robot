@@ -1,7 +1,7 @@
 #pragma once
 #include "main.h"
-#include "Drive.hpp"
-#include "BrainDriver.hpp"
+#include "drive.hpp"
+#include "brainDriver.hpp"
 #include "Lift.hpp"
 #include "Tilter.hpp"
 using namespace okapi;
