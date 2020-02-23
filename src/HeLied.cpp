@@ -15,8 +15,8 @@ HeLied::HeLied() {
 
 	MotorGroup frontIntakeMotors({Motor(INTAKE_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
 							 Motor(INTAKE_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
-	MotorGroup backIntakeMotors({ Motor(INTAKE_BACK_LEFT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-						 	 Motor(INTAKE_BACK_RIGHT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+	MotorGroup backIntakeMotors({ Motor(INTAKE_BACK_LEFT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+						 	 Motor(INTAKE_BACK_RIGHT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
 	frontIntake = std::make_shared<MotorGroup>(frontIntakeMotors);
 	backIntake = std::make_shared<MotorGroup>(backIntakeMotors);
 
@@ -27,6 +27,7 @@ HeLied::HeLied() {
 void HeLied::opControl(pros::Controller &joystick) {
 	opControlCheck(joystick);
 	drive->opControlDrive(joystick);
+	opControlIntake(joystick);
 	switch(armMode) {
 		case ARM:
 			lift->opControl(joystick);
@@ -35,7 +36,6 @@ void HeLied::opControl(pros::Controller &joystick) {
 			tilter->opControl(joystick);
 			break;
 	}
-	opControlIntake(joystick);
 }
 
 
@@ -67,18 +67,17 @@ void HeLied::runIntake(int power, int set) {
 void HeLied::opControlIntake(pros::Controller &joystick) {
 	int r1 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
 	int r2 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
-	int down = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
-	int up = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
+	int left = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
 
 	switch(armMode) {
 		case ARM:
 			if (r1) {
 				runIntake(200, 0);
-				runIntake(200, 1);
+				runIntake(0, 1);
 			}
 			else if (r2) {
 				runIntake(-200, 0);
-				runIntake(200, 1);
+				runIntake(0, 1);
 			} else {
 				runIntake(0);
 			}
@@ -86,11 +85,17 @@ void HeLied::opControlIntake(pros::Controller &joystick) {
 		case TILTER:
 			if (r1) {
 				runIntake(200);
+				tilter->moveTraySliderVoltage(12000);
 			}
 			else if (r2) {
 				runIntake(-200);
+				tilter->moveTraySliderVel(-100);
 			} else {
 				runIntake(0);
+				tilter->moveTraySliderVoltage(-6200);
+			}
+			if(left) {
+				backIntake->moveVoltage(-1000);
 			}
 			break;
 	}

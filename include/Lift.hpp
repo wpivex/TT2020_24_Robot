@@ -16,6 +16,7 @@ class Lift {
         void moveSmallTower();
         void moveMediumTower();
         void moveTallTower();
+        void moveToPos(int pos, int speed=100);
 
         std::shared_ptr<MotorGroup> armMotors;
 };

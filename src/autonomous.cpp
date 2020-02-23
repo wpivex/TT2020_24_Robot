@@ -1,6 +1,8 @@
 #include "main.h"
 #include "HeLied.hpp"
 
+using namespace okapi;
+
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -30,11 +32,11 @@ void autonomous() {
 	robot->drive->chassis->setTurnsMirrored(true);
 	#endif
 
-	robot->drive->chassis->setMaxVelocity(150);
-	// robot->drive->chassis->moveDistance(24_in);
-	robot->drive->chassis->turnAngle(90_deg);
-	robot->runIntake(200);
-
 	// Deploy tray
+	// TODO fuck
+
+	// drive to in L
+	robot->drive->chassis->moveDistance(10_in);
+	// robot->lift->
 
 }

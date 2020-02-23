@@ -51,7 +51,7 @@ void opcontrol() {
 	while (true) {
 		robot->opControl(master);
 		std::valarray<std::int32_t> vals = robot->drive->chassis->getModel()->getSensorVals();
-		// printf("L: %d, R: %d, isSettled: %d\n", vals[0], vals[1], robot->drive->chassis->isSettled());
+		printf("L: %d, R: %d, isSettled: %d\n", vals[0], vals[1], robot->drive->chassis->isSettled());
 		auto state = robot->drive->chassis->getOdometry()->getState(okapi::StateMode::CARTESIAN);
 		Menu::getMenu()->addDebugPrint(0, state.str());
 		Menu::getMenu()->addDebugPrint(1, "L: " + std::to_string(vals[0]));

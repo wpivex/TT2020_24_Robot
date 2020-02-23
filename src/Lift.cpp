@@ -24,3 +24,7 @@ void Lift::opControl(pros::Controller& joystick) {
 void Lift::moveLift(int power) {
     armMotors->moveVelocity(power);
 }
+
+void Lift::moveToPos(int pos, int speed) {
+    armMotors->moveAbsolute(pos, speed);
+}

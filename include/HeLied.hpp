@@ -19,11 +19,12 @@ using namespace okapi;
 
 #define INTAKE_LEFT 20
 #define INTAKE_RIGHT 19
-#define INTAKE_BACK_LEFT 16
-#define INTAKE_BACK_RIGHT 15
+#define INTAKE_BACK_LEFT 10
+#define INTAKE_BACK_RIGHT 16
 
 #define FOURBAR_LEFT 18
 #define FOURBAR_RIGHT 17
+#define SLIDER 12
 
 #define ENCODER_LEFT_DRIVE_TOP 'g'
 #define ENCODER_LEFT_DRIVE_BOT 'h'
@@ -32,6 +33,8 @@ using namespace okapi;
 
 #define ARM_LEFT 14
 #define ARM_RIGHT 13
+
+// BROKEN PORTS? 5, 11, 15
 
 enum ArmMode {
 	ARM,
@@ -43,13 +46,13 @@ class HeLied {
 		static HeLied* robot;
 		HeLied();
 		// 0 = arm mode, 1 = tilter mode
-		ArmMode armMode = TILTER;
 		int lastToggleA = 0;
 
 		void opControlCheck(pros::Controller& joystick);
 
 	public:
 		static HeLied* getRobot();
+		ArmMode armMode = TILTER;
 		std::shared_ptr<Drive> drive;
 		std::shared_ptr<Lift> lift;
 		std::shared_ptr<Tilter> tilter;
