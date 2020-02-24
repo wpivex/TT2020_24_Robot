@@ -1,9 +1,12 @@
 #pragma once
 #include "main.h"
-#include "drive.hpp"
-#include "brainDriver.hpp"
+#include "Drive.hpp"
+#include "BrainDriver.hpp"
 #include "Lift.hpp"
 #include "Tilter.hpp"
+#include "Tray.hpp"
+#include "Intake.hpp"
+#include "ArmMode.hpp"
 using namespace okapi;
 
 #define BLUE_ALLIANCE
@@ -36,11 +39,6 @@ using namespace okapi;
 
 // BROKEN PORTS? 5, 11, 15
 
-enum ArmMode {
-	ARM,
-	TILTER
-};
-
 class HeLied {
 	private:
 		static HeLied* robot;
@@ -56,10 +54,8 @@ class HeLied {
 		std::shared_ptr<Drive> drive;
 		std::shared_ptr<Lift> lift;
 		std::shared_ptr<Tilter> tilter;
-		std::shared_ptr<MotorGroup> frontIntake;
-		std::shared_ptr<MotorGroup> backIntake;
+		std::shared_ptr<Intake> intake;
+		std::shared_ptr<Tray> tray;
 
-		void opControlIntake(pros::Controller& joystick);
 		void opControl(pros::Controller& joystick);
-		void runIntake(int power, int set=-1);
 };

@@ -2,41 +2,26 @@
 #include "HeLied.hpp"
 #include "menu/Menu.hpp"
 
-Tilter::Tilter() {
+Tilter::Tilter(std::shared_ptr<Tray> _tray) {
     MotorGroup fourbarMotors({Motor(FOURBAR_LEFT, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
-							Motor(FOURBAR_RIGHT, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
-	});
-	fourbar = std::make_shared<MotorGroup>(fourbarMotors);
+                            Motor(FOURBAR_RIGHT, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
+    });
+    fourbar = std::make_shared<MotorGroup>(fourbarMotors);
     fourbar->setBrakeMode(okapi::AbstractMotor::brakeMode::brake);
 
-    MotorGroup sliderMotors({Motor(SLIDER, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
-    slider = std::make_shared<MotorGroup>(sliderMotors);
-    slider->setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
-    slider->setCurrentLimit(300);
+    tray = _tray;
 }
 
 void Tilter::opControl(pros::Controller& joystick) {
     int up = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
     int down = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
-    int y = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_Y);
-    int x = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_X);
 
     if (up) {
-		moveFourbar(100);
-	} else if (down) {
-		moveFourbar(-100);
-	} else {
-		moveFourbar(0);
-	}
-
-    // release tray
-    // printf("Current: %d\n", slider->getCurrentDraw());
-    Menu::getMenu()->addDebugPrint(4, "Current:" + std::to_string(slider->getCurrentDraw()));
-    Menu::getMenu()->addDebugPrint(5, "Tray Pos:" + std::to_string(slider->getPosition()));
-    if(y) {
-        moveTraySliderVel(200);
-    } else if (x) {
-        moveTraySliderVel(-200);
+        moveFourbar(100);
+    } else if (down) {
+        moveFourbar(-100);
+    } else {
+        moveFourbar(0);
     }
 }
 
@@ -44,36 +29,26 @@ void Tilter::moveFourbar(int power) {
     if(power > 0) {
         double curr = fourbar->getPosition();
         double diff = FOURBAR_UP_VALUE - curr;
-	float gain = FOURBAR_GAIN;
-	if (slider->getPosition() < 150){
-		gain = gain * .4;
-	} 
+        float gain = FOURBAR_GAIN;
+        if (slider->getPosition() < 150){
+            gain = gain * .4;
+        }
         int velocity = gain * diff;
         // Add constraints
         velocity = velocity < FOURBAR_UP_MIN_VEL ? FOURBAR_UP_MIN_VEL : velocity;
         velocity = velocity >= power ? power : velocity;
         fourbar->moveVelocity(velocity);
-	Menu::getMenu()->addDebugPrint(7, "Diff:" + std::to_string(diff));	
+        Menu::getMenu()->addDebugPrint(7, "Diff:" + std::to_string(diff));
         if (diff < 200){
-            moveTraySliderVoltage(5000, 100);
-	}
-	else if (diff < 600){
-	    moveTraySliderVoltage(-12000, 900);
-	}
-	else {
-            moveTraySliderVoltage(5000, 100);
-	}
+            tray->moveTraySliderVoltage(5000, 100);
+        }
+        else if (diff < 600){
+            tray->moveTraySliderVoltage(-12000, 900);
+        }
+        else {
+            tray->moveTraySliderVoltage(5000, 100);
+        }
     } else {
         fourbar->moveVelocity(power);
     }
-}
-
-void Tilter::moveTraySliderVoltage(int voltage, int cur) {
-    slider->setCurrentLimit(cur);
-    slider->moveVoltage(voltage);
-}
-
-void Tilter::moveTraySliderVel(int vel, int cur) {
-    slider->setCurrentLimit(cur);
-    slider->moveVelocity(vel);
 }
