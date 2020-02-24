@@ -34,15 +34,14 @@ void Tilter::opControl(pros::Controller& joystick) {
     Menu::getMenu()->addDebugPrint(4, "Current:" + std::to_string(slider->getCurrentDraw()));
     Menu::getMenu()->addDebugPrint(5, "Tray Pos:" + std::to_string(slider->getPosition()));
     if(y) {
-        moveTraySliderVel(150);
+        moveTraySliderVel(200);
     } else if (x) {
-        moveTraySliderVel(-150);
+        moveTraySliderVel(-200);
     }
 }
 
 void Tilter::moveFourbar(int power) {
     if(power > 0) {
-	moveTraySliderVoltage(5000, 100);
         double curr = fourbar->getPosition();
         double diff = FOURBAR_UP_VALUE - curr;
 	float gain = FOURBAR_GAIN;
@@ -54,6 +53,16 @@ void Tilter::moveFourbar(int power) {
         velocity = velocity < FOURBAR_UP_MIN_VEL ? FOURBAR_UP_MIN_VEL : velocity;
         velocity = velocity >= power ? power : velocity;
         fourbar->moveVelocity(velocity);
+	Menu::getMenu()->addDebugPrint(7, "Diff:" + std::to_string(diff));	
+        if (diff < 200){
+            moveTraySliderVoltage(5000, 100);
+	}
+	else if (diff < 600){
+	    moveTraySliderVoltage(-12000, 900);
+	}
+	else {
+            moveTraySliderVoltage(5000, 100);
+	}
     } else {
         fourbar->moveVelocity(power);
     }

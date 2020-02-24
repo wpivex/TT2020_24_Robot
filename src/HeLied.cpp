@@ -85,7 +85,7 @@ void HeLied::opControlIntake(pros::Controller &joystick) {
 		case TILTER:
 			if (r1) {
 				runIntake(200);
-				tilter->moveTraySliderVoltage(12000);
+				tilter->moveTraySliderVoltage(12000, 600);
 			}
 			else if (r2) {
 				runIntake(-200);
@@ -95,8 +95,10 @@ void HeLied::opControlIntake(pros::Controller &joystick) {
 				tilter->moveTraySliderVoltage(-6200);
 			}
 			if(left) {
-				backIntake->moveVoltage(-1000);
-			}
+				backIntake->moveVoltage(-200);
+				frontIntake->moveVoltage(12000);
+				tilter->moveTraySliderVoltage(-12000, 700);
+		}
 			break;
 	}
 }
