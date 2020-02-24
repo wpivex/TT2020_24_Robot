@@ -33,6 +33,35 @@ void Intake::runIntake(int power, IntakeSet set) {
     }
 }
 
+void Intake::setIntakeMode(IntakeMode intakeMode){
+    switch(intakeMode) {
+        case IM_IN_FOR_TOWER:
+            runIntake(200, IS_FRONT);
+            runIntake(0, IS_BACK);
+            break;
+        case IM_OUT_FOR_TOWER:
+            runIntake(-200, IS_FRONT);
+            runIntake(0, IS_BACK);
+            break;
+        case IM_IN_FOR_TRAY:
+            runIntake(200);
+            tray->moveTraySliderVoltage(12000, 300);
+            break;
+        case IM_OUT_FOR_TRAY:
+            runIntake(-200);
+            tray->moveTraySliderVel(-100);
+            break;
+        case IM_SQUISH_STACK:
+            backIntake->moveVoltage(-200);
+            frontIntake->moveVoltage(12000);
+            tray->moveTraySliderVoltage(-12000, 700);
+        default:
+            runIntake(0);
+            tray->moveTraySliderVoltage(-6200);
+            break;
+    }
+}
+
 void Intake::opControl(pros::Controller &joystick, ArmMode armMode) {
     int r1 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
     int r2 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
@@ -41,32 +70,25 @@ void Intake::opControl(pros::Controller &joystick, ArmMode armMode) {
     switch(armMode) {
         case ARM:
             if (r1) {
-                runIntake(200, IS_FRONT);
-                runIntake(0, IS_BACK);
+                setIntakeMode(IM_IN_FOR_TOWER);
             }
             else if (r2) {
-                runIntake(-200, IS_FRONT);
-                runIntake(0, IS_BACK);
+                setIntakeMode(IM_OUT_FOR_TOWER);
             } else {
-                runIntake(0);
+                setIntakeMode(IM_OFF);
             }
             break;
         case TILTER:
             if (r1) {
-                runIntake(200);
-                tray->moveTraySliderVoltage(12000, 300);
+                setIntakeMode(IM_IN_FOR_TRAY);
             }
             else if (r2) {
-                runIntake(-200);
-                tray->moveTraySliderVel(-100);
+                setIntakeMode(IM_OUT_FOR_TRAY);
             } else {
-                runIntake(0);
-                tray->moveTraySliderVoltage(-6200);
+                setIntakeMode(IM_OFF);
             }
             if(left) {
-                backIntake->moveVoltage(-200);
-                frontIntake->moveVoltage(12000);
-                tray->moveTraySliderVoltage(-12000, 700);
+                setIntakeMode(IM_SQUISH_STACK);
             }
             break;
     }
