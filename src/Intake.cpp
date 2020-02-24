@@ -54,7 +54,7 @@ void Intake::opControl(pros::Controller &joystick, ArmMode armMode) {
         case TILTER:
             if (r1) {
                 runIntake(200);
-                tray->moveTraySliderVoltage(12000, 600);
+                tray->moveTraySliderVoltage(12000, 300);
             }
             else if (r2) {
                 runIntake(-200);

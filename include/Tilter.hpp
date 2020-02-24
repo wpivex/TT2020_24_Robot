@@ -19,5 +19,4 @@ class Tilter {
 
         std::shared_ptr<Tray> tray;
         std::shared_ptr<MotorGroup> fourbar;
-        std::shared_ptr<MotorGroup> slider;
 };

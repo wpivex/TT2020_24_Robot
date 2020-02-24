@@ -30,7 +30,7 @@ void Tilter::moveFourbar(int power) {
         double curr = fourbar->getPosition();
         double diff = FOURBAR_UP_VALUE - curr;
         float gain = FOURBAR_GAIN;
-        if (slider->getPosition() < 150){
+        if (tray->slider->getPosition() < 150){
             gain = gain * .4;
         }
         int velocity = gain * diff;
