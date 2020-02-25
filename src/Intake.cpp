@@ -63,34 +63,29 @@ void Intake::setIntakeMode(IntakeMode intakeMode){
     }
 }
 
-void Intake::opControl(pros::Controller &joystick, ArmMode armMode) {
+void Intake::opControl(pros::Controller &joystick, ArmMode armMode, bool armUp) {
     int r1 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
     int r2 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
     int left = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
 
-    switch(armMode) {
-        case ARM:
-            if (r1) {
-                setIntakeMode(IM_IN_FOR_TOWER);
-            }
-            else if (r2) {
-                setIntakeMode(IM_OUT_FOR_TOWER);
-            } else {
-                setIntakeMode(IM_OFF);
-            }
-            break;
-        case TILTER:
-            if (r1) {
-                setIntakeMode(IM_IN_FOR_TRAY);
-            }
-            else if (r2) {
-                setIntakeMode(IM_OUT_FOR_TRAY);
-            } else {
-                setIntakeMode(IM_OFF);
-            }
-            if(left) {
-                setIntakeMode(IM_SQUISH_STACK);
-            }
-            break;
+    if (armMode == ARM and armUp){
+        if (r1) {
+            setIntakeMode(IM_IN_FOR_TRAY);
+        } else if (r2) {
+            setIntakeMode(IM_OUT_FOR_TOWER);
+        } else {
+            setIntakeMode(IM_OFF);
+        }
+    } else {
+        if (r1) {
+            setIntakeMode(IM_IN_FOR_TRAY);
+        } else if (r2) {
+            setIntakeMode(IM_OUT_FOR_TRAY);
+        } else {
+            setIntakeMode(IM_OFF);
+        }
+        if (left) {
+            setIntakeMode(IM_SQUISH_STACK);
+        }
     }
 }

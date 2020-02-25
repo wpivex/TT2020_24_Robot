@@ -48,6 +48,8 @@ void Tilter::moveFourbar(int power) {
         else {
             tray->moveTraySliderVoltage(5000, 100);
         }
+    } else if (power == 0){
+        fourbar->moveVoltage(0);
     } else {
         fourbar->moveVelocity(power);
     }

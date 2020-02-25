@@ -25,7 +25,7 @@ class Intake {
 
     public:
         Intake(std::shared_ptr<Tray> tray);
-        void opControl(pros::Controller& joystick, ArmMode armMode);
+        void opControl(pros::Controller& joystick, ArmMode armMode, bool armUp);
         void runIntake(int power, IntakeSet set=IS_BOTH);
         void setIntakeMode(IntakeMode intakeMode);
 

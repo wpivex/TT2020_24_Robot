@@ -10,7 +10,8 @@ Lift::Lift() {
     armMotors->tarePosition();
 }
 
-void Lift::opControl(pros::Controller& joystick, ArmMode armMode) {
+// Returns true if lift is up
+bool Lift::opControl(pros::Controller& joystick, ArmMode armMode) {
     int up = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
     int down = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
     if (armMode == ARM){
@@ -26,6 +27,8 @@ void Lift::opControl(pros::Controller& joystick, ArmMode armMode) {
         moveLift(0);
     }
     Menu::getMenu()->addDebugPrint(6, "Arm Pos:" + std::to_string(armMotors->getPosition()));
+
+    return armMotors->getPosition() > armDownThreshold;
 }
 
 void Lift::moveLift(int power) {

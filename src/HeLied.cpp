@@ -19,8 +19,8 @@ HeLied::HeLied() {
 void HeLied::opControl(pros::Controller &joystick) {
 	opControlCheck(joystick);
 	drive->opControlDrive(joystick);
-	intake->opControl(joystick, armMode);
-    lift->opControl(joystick, armMode);
+    bool armUp = lift->opControl(joystick, armMode);
+	intake->opControl(joystick, armMode, armUp);
 	if (armMode == TILTER){
 	    tilter->opControl(joystick);
 	}

@@ -10,9 +10,10 @@ class Lift {
         int heightSmallTower = -1;
         int heightMediumTower = -1;
         int heightTallTower = -1;
+        int armDownThreshold = 100;
     public:
         Lift();
-        void opControl(pros::Controller& joystick, ArmMode armMode);
+        bool opControl(pros::Controller& joystick, ArmMode armMode);
         void moveLift(int power);
         void moveSmallTower();
         void moveMediumTower();
