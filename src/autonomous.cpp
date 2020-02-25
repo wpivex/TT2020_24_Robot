@@ -83,7 +83,12 @@ void autonomous() {
 //    drive->driveDist(8_in, 90);
 
     intake->setIntakeMode(IM_IN_FOR_TRAY);
-    drive->driveDist(44_in, 70);
+    drive->driveDist(38_in, 70);
+    chassis->turnToAngle(-42_deg);
+    drive->driveDist(15_in, 50);
+    drive->driveDist(-5_in, 90);
     chassis->turnToAngle(90_deg);
-    drive->driveDist(52_in, 70);
+    drive->driveDist(20_in, 70);
+    chassis->turnToAngle(70_deg);
+    drive->driveDist(8_in, 70);
 }
