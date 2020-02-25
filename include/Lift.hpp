@@ -4,21 +4,29 @@
 
 using namespace okapi;
 
+enum ArmPosition{
+    AP_DOWN = 0,
+    AP_THRESH = 100,
+    AP_LOW_HOVER = 140,
+    AP_HIGH_HOVER = 220,
+    AP_LOW_TOWER = 380,
+    AP_MEDIUM_TOWER = 480,
+    AP_HIGH_TOWER = 750
+};
+
+
 class Lift {
     private:
         // TODO figure these out.
-        int heightSmallTower = -1;
-        int heightMediumTower = -1;
-        int heightTallTower = -1;
-        int armDownThreshold = 100;
+        ArmPosition setPosition;
+        int err_thresh = 20;
     public:
         Lift();
         bool opControl(pros::Controller& joystick, ArmMode armMode);
         void moveLift(int power);
-        void moveSmallTower();
-        void moveMediumTower();
-        void moveTallTower();
+        void moveToArmPos(ArmPosition armPosition);
         void moveToPos(int pos, int speed=100);
+        void goToPos(ArmPosition armPosition, int speed=100);
 
         std::shared_ptr<MotorGroup> armMotors;
 };

@@ -38,3 +38,15 @@ void Lift::moveLift(int power) {
 void Lift::moveToPos(int pos, int speed) {
     armMotors->moveAbsolute(pos, speed);
 }
+
+void Lift::moveToArmPos(ArmPosition armPosition, int speed) {
+    setPosition = armPosition;
+    moveToPos((int) armPosition, speed);
+}
+
+void Lift::goToPos(ArmPosition armPosition) {
+    moveToArmPos(armPosition);
+    while (abs(armMotors->getPositition() - (int) armPosition) > err_thresh){
+        pros::delay(10);
+    }
+}
