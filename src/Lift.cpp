@@ -10,12 +10,17 @@ Lift::Lift() {
     armMotors->tarePosition();
 }
 
-void Lift::opControl(pros::Controller& joystick) {
-    int x = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
-    int b = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
-    if(x) {
+void Lift::opControl(pros::Controller& joystick, ArmMode armMode) {
+    int up = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
+    int down = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
+    if (armMode == ARM){
+        up |= joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
+        down |= joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
+    }
+
+    if(up) {
         moveLift(100);
-    } else if(b) {
+    } else if(down) {
         moveLift(-100);
     } else {
         moveLift(0);

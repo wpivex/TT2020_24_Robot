@@ -37,11 +37,11 @@ void Intake::setIntakeMode(IntakeMode intakeMode){
     switch(intakeMode) {
         case IM_IN_FOR_TOWER:
             runIntake(200, IS_FRONT);
-            runIntake(0, IS_BACK);
+            runIntake(200, IS_BACK);
             break;
         case IM_OUT_FOR_TOWER:
-            runIntake(-200, IS_FRONT);
-            runIntake(0, IS_BACK);
+            runIntake(-150, IS_FRONT);
+            runIntake(200, IS_BACK);
             break;
         case IM_IN_FOR_TRAY:
             runIntake(200);
@@ -52,9 +52,10 @@ void Intake::setIntakeMode(IntakeMode intakeMode){
             tray->moveTraySliderVel(-100);
             break;
         case IM_SQUISH_STACK:
-            backIntake->moveVoltage(-200);
+            backIntake->moveVelocity(-20);
             frontIntake->moveVoltage(12000);
             tray->moveTraySliderVoltage(-12000, 700);
+            break;
         default:
             runIntake(0);
             tray->moveTraySliderVoltage(-6200);

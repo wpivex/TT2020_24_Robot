@@ -1,5 +1,6 @@
 #pragma once
 #include "main.h"
+#include "ArmMode.hpp"
 
 using namespace okapi;
 
@@ -11,7 +12,7 @@ class Lift {
         int heightTallTower = -1;
     public:
         Lift();
-        void opControl(pros::Controller& joystick);
+        void opControl(pros::Controller& joystick, ArmMode armMode);
         void moveLift(int power);
         void moveSmallTower();
         void moveMediumTower();

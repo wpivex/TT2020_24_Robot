@@ -20,13 +20,9 @@ void HeLied::opControl(pros::Controller &joystick) {
 	opControlCheck(joystick);
 	drive->opControlDrive(joystick);
 	intake->opControl(joystick, armMode);
-	switch(armMode) {
-		case ARM:
-			lift->opControl(joystick);
-			break;
-		case TILTER:
-			tilter->opControl(joystick);
-			break;
+    lift->opControl(joystick, armMode);
+	if (armMode == TILTER){
+	    tilter->opControl(joystick);
 	}
 	tray->opControl(joystick);
 }
