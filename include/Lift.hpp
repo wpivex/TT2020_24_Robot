@@ -24,7 +24,7 @@ class Lift {
         Lift();
         bool opControl(pros::Controller& joystick, ArmMode armMode);
         void moveLift(int power);
-        void moveToArmPos(ArmPosition armPosition);
+        void moveToArmPos(ArmPosition armPosition, int speed=100);
         void moveToPos(int pos, int speed=100);
         void goToPos(ArmPosition armPosition, int speed=100);
 

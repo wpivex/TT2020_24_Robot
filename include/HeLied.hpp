@@ -21,13 +21,13 @@ using namespace okapi;
 #define DRIVE_RIGHT_BACK 1
 
 #define INTAKE_LEFT 20
-#define INTAKE_RIGHT 19
+#define INTAKE_RIGHT 11
 #define INTAKE_BACK_LEFT 10
 #define INTAKE_BACK_RIGHT 16
 
 #define FOURBAR_LEFT 18
 #define FOURBAR_RIGHT 17
-#define SLIDER 12
+#define SLIDER 15
 
 #define ENCODER_LEFT_DRIVE_TOP 'g'
 #define ENCODER_LEFT_DRIVE_BOT 'h'
@@ -37,7 +37,7 @@ using namespace okapi;
 #define ARM_LEFT 14
 #define ARM_RIGHT 13
 
-// BROKEN PORTS? 5, 11, 15
+// BROKEN PORTS? 19, 12
 
 class HeLied {
 	private:

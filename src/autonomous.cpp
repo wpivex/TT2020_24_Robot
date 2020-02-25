@@ -14,6 +14,14 @@ using namespace okapi;
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
+void deploy() {
+
+}
+
+void score() {
+
+}
+
 void autonomous() {
 	auto robot = HeLied::getRobot();
 
@@ -23,20 +31,47 @@ void autonomous() {
     //     {0.005, 0, 0.000}, // Turn controller gains
     //     {0.001, 0, 0.0001}  // Angle controller gains (helps drive straight)
 	// );
+    std::shared_ptr<Drive> drive = robot->drive;
+    std::shared_ptr<okapi::DefaultOdomChassisController> chassis = drive->chassis;
+    std::shared_ptr<Lift> lift = robot->lift;
+    std::shared_ptr<Intake> intake = robot->intake;
 
 	#ifdef BLUE
-	robot->drive->chassis->setTurnsMirrored(false);
+	chassis->setTurnsMirrored(false);
 	#endif
 
 	#ifdef RED
-	robot->drive->chassis->setTurnsMirrored(true);
-	#endif
+	chassis->setTurnsMirrored(true);
+    #endif
+
+	chassis->getModel()->setMaxVelocity(150);
 
 	// Deploy tray
 	// TODO fuck
 
 	// drive to in L
-	robot->drive->chassis->moveDistance(10_in);
-	// robot->lift->
-
+	intake->setIntakeMode(IM_IN_FOR_TRAY);
+	drive->driveDist(24_in, 90);
+	pros::delay(500);
+    intake->setIntakeMode(IM_OFF);
+    lift->moveToPos(AP_HIGH_HOVER);
+    drive->driveDist(-5_in);
+    lift->goToPos(AP_HIGH_HOVER);
+    drive->driveDist(10_in);
+    lift->goToPos(AP_LOW_HOVER);
+    drive->driveDist(-25_in);
+    lift->goToPos(AP_DOWN);
+    intake->setIntakeMode(IM_IN_FOR_TRAY);
+    drive->driveDist(28_in, 90);
+    chassis->turnAngle(-40_deg);
+    chassis->getModel()->setMaxVelocity(150);
+    drive->driveDist(17_in);
+    pros::delay(600);
+    drive->driveDist(-10_in);
+    chassis->turnAngle(30_deg);
+    drive->driveDist(8_in);
+    pros::delay(600);
+    drive->driveDist(-10_in);
+    chassis->turnAngle(90_deg);
+    drive->driveDist(15_in);
 }

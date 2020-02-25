@@ -28,7 +28,7 @@ bool Lift::opControl(pros::Controller& joystick, ArmMode armMode) {
     }
     Menu::getMenu()->addDebugPrint(6, "Arm Pos:" + std::to_string(armMotors->getPosition()));
 
-    return armMotors->getPosition() > armDownThreshold;
+    return armMotors->getPosition() > (int) AP_THRESH;
 }
 
 void Lift::moveLift(int power) {
@@ -44,9 +44,9 @@ void Lift::moveToArmPos(ArmPosition armPosition, int speed) {
     moveToPos((int) armPosition, speed);
 }
 
-void Lift::goToPos(ArmPosition armPosition) {
-    moveToArmPos(armPosition);
-    while (abs(armMotors->getPositition() - (int) armPosition) > err_thresh){
+void Lift::goToPos(ArmPosition armPosition, int speed) {
+    moveToArmPos(armPosition, speed);
+    while (abs(armMotors->getPosition() - (int) armPosition) > err_thresh){
         pros::delay(10);
     }
 }

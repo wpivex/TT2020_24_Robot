@@ -17,6 +17,7 @@ HeLied::HeLied() {
 }
 
 void HeLied::opControl(pros::Controller &joystick) {
+    robot->drive->chassis->getModel()->setMaxVelocity(150);
 	opControlCheck(joystick);
 	drive->opControlDrive(joystick);
     bool armUp = lift->opControl(joystick, armMode);
@@ -25,6 +26,10 @@ void HeLied::opControl(pros::Controller &joystick) {
 	    tilter->opControl(joystick);
 	}
 	tray->opControl(joystick);
+
+	if (joystick.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
+	    drive->driveDist(12_in);
+	}
 }
 
 

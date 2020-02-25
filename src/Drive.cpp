@@ -42,3 +42,8 @@ void Drive::opControlDrive(pros::Controller& joystick) {
     this->chassis->model().arcade(forward, turn);
     // this->chassis->model().tank(forward, forward2);
 }
+
+void Drive::driveDist(QLength len, int vel){
+    this->chassis->getModel()->setMaxVelocity(vel);
+    this->chassis->moveDistance(len);
+}

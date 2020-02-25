@@ -10,6 +10,7 @@ class Drive {
 		std::shared_ptr<okapi::DefaultOdomChassisController> chassis;
 		std::shared_ptr<okapi::ChassisControllerPID> chassisPID;
 		void opControlDrive(pros::Controller& joystick);
+		void driveDist(QLength len, int vel=150);
 
 	private:
 		std::shared_ptr<MotorGroup> leftMotors;
