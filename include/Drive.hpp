@@ -14,5 +14,5 @@ class Drive {
 
 	private:
 		std::shared_ptr<MotorGroup> leftMotors;
-		std::shared_ptr<MotorGroup> rightMotors; 
+		std::shared_ptr<MotorGroup> rightMotors;
 };

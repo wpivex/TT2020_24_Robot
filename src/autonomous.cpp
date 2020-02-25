@@ -50,28 +50,40 @@ void autonomous() {
 	// TODO fuck
 
 	// drive to in L
-	intake->setIntakeMode(IM_IN_FOR_TRAY);
-	drive->driveDist(24_in, 90);
-	pros::delay(500);
-    lift->moveToPos(AP_HIGH_HOVER);
-    drive->driveDist(-5_in);
-    lift->goToPos(AP_HIGH_HOVER);
-    intake->setIntakeMode(IM_OFF);
-    drive->driveDist(10_in);
-    lift->goToPos(AP_LOW_HOVER);
-    drive->driveDist(-25_in);
-    lift->goToPos(AP_DOWN);
+//	intake->setIntakeMode(IM_IN_FOR_TRAY);
+//	drive->driveDist(24_in, 90);
+//	pros::delay(500);
+//    lift->moveToPos(AP_LOW_HOVER);
+//    drive->driveDist(-5_in, 90);
+//    chassis->turnAngle(-8_deg);
+//    lift->goToPos(AP_LOW_HOVER);
+////    intake->setIntakeMode(IM_OFF);
+//    drive->driveDist(10_in);
+//    lift->goToPos(AP_LOW_HOVER);
+//    drive->driveDist(-15_in);
+//    lift->goToPos(AP_DOWN);
+//    intake->setIntakeMode(IM_IN_FOR_TRAY);
+//    drive->driveDist(20_in, 90);
+//    chassis->turnToAngle(-40_deg);
+//    chassis->getModel()->setMaxVelocity(150);
+//    drive->driveDist(11_in, 90);
+//    pros::delay(400);
+////    drive->driveDist(-10_in);
+//    chassis->turnToAngle(0_deg);
+//    drive->driveDist(8_in, 90);
+//    pros::delay(600);
+//    drive->driveDist(-10_in);
+//    chassis->turnToAngle(40_deg);
+//    drive->driveDist(16_in, 90);
+//    drive->driveDist(-5_in, 90);
+//    chassis->turnToAngle(60_deg);
+//    drive->driveDist(6_in, 60);
+//    drive->driveDist(-2_in, 90);
+//    chassis->turnToAngle(-120_deg);
+//    drive->driveDist(8_in, 90);
+
     intake->setIntakeMode(IM_IN_FOR_TRAY);
-    drive->driveDist(28_in, 90);
-    chassis->turnAngle(-40_deg);
-    chassis->getModel()->setMaxVelocity(150);
-    drive->driveDist(17_in);
-    pros::delay(600);
-    drive->driveDist(-10_in);
-    chassis->turnAngle(30_deg);
-    drive->driveDist(8_in);
-    pros::delay(600);
-    drive->driveDist(-10_in);
-    chassis->turnAngle(40_deg);
-    drive->driveDist(15_in);
+    drive->driveDist(44_in, 70);
+    chassis->turnToAngle(90_deg);
+    drive->driveDist(52_in, 70);
 }
