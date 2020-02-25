@@ -53,10 +53,10 @@ void autonomous() {
 	intake->setIntakeMode(IM_IN_FOR_TRAY);
 	drive->driveDist(24_in, 90);
 	pros::delay(500);
-    intake->setIntakeMode(IM_OFF);
     lift->moveToPos(AP_HIGH_HOVER);
     drive->driveDist(-5_in);
     lift->goToPos(AP_HIGH_HOVER);
+    intake->setIntakeMode(IM_OFF);
     drive->driveDist(10_in);
     lift->goToPos(AP_LOW_HOVER);
     drive->driveDist(-25_in);
@@ -72,6 +72,6 @@ void autonomous() {
     drive->driveDist(8_in);
     pros::delay(600);
     drive->driveDist(-10_in);
-    chassis->turnAngle(90_deg);
+    chassis->turnAngle(40_deg);
     drive->driveDist(15_in);
 }
