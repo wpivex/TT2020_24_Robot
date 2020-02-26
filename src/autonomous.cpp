@@ -26,8 +26,8 @@ void score() {
     robot->intake->setIntakeMode(IM_IN_FOR_TRAY);
     pros::delay(1000);
 
-    chassis->setMaxVelocity(100);
-    chassis->moveDistance(24_in);
+    chassis->setMaxVelocity(120);
+    chassis->moveDistance(12_in);
     // ram the corner
     chassis->getModel()->forward(100);
     pros::delay(400);
@@ -151,4 +151,7 @@ void autonomous() {
     // Line up to score
     drive->driveDist(-11_in, 110);
     chassis->turnToAngle(220_deg);
+
+    // Score
+    score();
 }
