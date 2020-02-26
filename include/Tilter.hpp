@@ -10,7 +10,7 @@ class Tilter {
 		const double FOURBAR_GAIN = 0.3;
 
     public:
-        const double FOURBAR_UP_VALUE = 950;
+        const double FOURBAR_UP_VALUE = 1000;
         std::shared_ptr<Tray> tray;
         std::shared_ptr<MotorGroup> fourbar;
 

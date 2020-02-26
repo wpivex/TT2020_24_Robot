@@ -16,7 +16,7 @@ class Drive {
 		std::shared_ptr<okapi::DefaultOdomChassisController> chassis;
 		std::shared_ptr<okapi::ChassisControllerPID> chassisPID;
 		void opControlDrive(pros::Controller& joystick);
-    void driveDist(QLength len, int vel=150, DrivePrecision precision = MEDIUM_PRECISION);
+    void driveDist(QLength len, int vel=130, DrivePrecision precision = MEDIUM_PRECISION);
     void turnToAngle(QAngle angle, int vel=150, DrivePrecision precision = MEDIUM_PRECISION);
 
         QLength x_d;

@@ -29,7 +29,7 @@ Drive::Drive() {
                     {0.001, 0, 0.0001}  // Angle controller gains (helps drive straight)
                 )
                 .withSensors(leftEncoder, rightEncoder)
-                .withClosedLoopControllerTimeUtil(70, 6, 150_ms)
+                .withClosedLoopControllerTimeUtil(80, 6, 120_ms)
                 .withOdometry({{3.25_in, 15_in},1024}, StateMode::CARTESIAN, 0_mm, 0_deg)
                 .buildOdometry();
     chassis = std::dynamic_pointer_cast<okapi::DefaultOdomChassisController>(c);
