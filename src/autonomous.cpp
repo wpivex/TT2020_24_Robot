@@ -45,7 +45,7 @@ void score() {
     // back up
     robot->intake->runIntake(-42);
     chassis->getModel()->forward(-50);
-    robot->tilter->moveFourbar(-90);
+    robot->tilter->moveFourbar(-120);
     pros::delay(400);
     robot->tilter->moveFourbar(0);
     chassis->getModel()->stop();
@@ -92,19 +92,19 @@ void autonomous() {
     // Get isolated
     drive->turnToAngle(48_deg,90);
     drive->driveDist(13_in, 70);
-    drive->driveDist(-6_in);
+    drive->driveDist(-6_in, 110);
 
     // Get near center
-    drive->turnToAngle(24_deg,90);
-    drive->driveDist(16_in, 70);
-    drive->driveDist(-6_in);
     drive->turnToAngle(20_deg,90);
-    drive->driveDist(11_in, 100);
+    drive->driveDist(19_in, 80);
+    drive->driveDist(-7_in, 100);
+    drive->turnToAngle(14_deg,90);
+    drive->driveDist(12_in, 100);
 
     // Line up to score
-    drive->driveDist(-6_in, 100);
-    drive->turnToAngle(-145_deg);
-    drive->driveDist(36_in, 100);
+    drive->driveDist(-7_in, 110);
+    drive->turnToAngle(-146_deg, 120);
+    drive->driveDist(36_in, 170);
 
     // Score
     score();
