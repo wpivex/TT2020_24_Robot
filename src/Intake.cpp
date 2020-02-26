@@ -68,7 +68,7 @@ void Intake::opControl(pros::Controller &joystick, ArmMode armMode, bool armUp) 
     int r2 = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
     int left = joystick.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
 
-    if (armMode == ARM and armUp){
+    if (armMode == ARM && armUp){
         if (r1) {
             setIntakeMode(IM_IN_FOR_TRAY);
         } else if (r2) {
