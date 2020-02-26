@@ -15,7 +15,13 @@ using namespace okapi;
  * from where it left off.
  */
 void deploy() {
-    // fuck
+
+    auto robot = HeLied::getRobot();
+
+    robot->intake->setIntakeMode(IM_OUT_FOR_TOWER);
+    robot->lift->goToPos(AP_HIGH_TOWER);
+    robot->intake->setIntakeMode(IM_OUT_FOR_TOWER);
+    robot->lift->homeArm();
 }
 
 void score() {
@@ -75,7 +81,7 @@ void autonomous() {
 	chassis->setTurnsMirrored(true);
     #endif
 
-    lift->moveToPos(AP_DOWN);
+    deploy();
     intake->setIntakeMode(IM_IN_FOR_TRAY);
     drive->driveDist(37_in, 70);
     drive->turnToAngle(20_deg);
@@ -98,8 +104,8 @@ void autonomous() {
     drive->turnToAngle(20_deg,90);
     drive->driveDist(19_in, 80);
     drive->driveDist(-7_in, 100);
-    drive->turnToAngle(14_deg,90);
-    drive->driveDist(12_in, 100);
+    drive->turnToAngle(10_deg,90);
+    drive->driveDist(11_in, 100);
 
     // Line up to score
     drive->driveDist(-7_in, 110);

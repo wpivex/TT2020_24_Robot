@@ -20,6 +20,7 @@ class Lift {
         // TODO figure these out.
         ArmPosition setPosition;
         int err_thresh = 20;
+        int curr_thresh = 2000;
     public:
         Lift();
         bool opControl(pros::Controller& joystick, ArmMode armMode);
@@ -27,6 +28,7 @@ class Lift {
         void moveToArmPos(ArmPosition armPosition, int speed=100);
         void moveToPos(int pos, int speed=100);
         void goToPos(ArmPosition armPosition, int speed=100);
+        void homeArm(int power=12000);
 
         std::shared_ptr<MotorGroup> armMotors;
 };

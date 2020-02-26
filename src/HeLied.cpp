@@ -28,7 +28,8 @@ void HeLied::opControl(pros::Controller &joystick) {
 	tray->opControl(joystick);
 
 	if (joystick.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
-	    drive->driveDist(0_in);
+//	    drive->driveDist(0_in);
+        lift->homeArm();
 //        auto state = robot->drive->chassis->getOdometry()->getState(okapi::StateMode::CARTESIAN);
 	}
 }

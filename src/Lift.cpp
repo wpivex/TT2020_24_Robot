@@ -53,3 +53,19 @@ void Lift::goToPos(ArmPosition armPosition, int speed) {
         pros::delay(10);
     }
 }
+
+void Lift::homeArm(int power) {
+    armMotors->moveVoltage(-power);
+    int count = 10;
+    while (count > 0) {
+        if (armMotors->getCurrentDraw() > 1500) {
+            count --;
+        }
+        else {
+            count = 10;
+        }
+        pros::delay(10);
+    }
+    armMotors->tarePosition();
+    armMotors->moveVoltage(-100);
+}
