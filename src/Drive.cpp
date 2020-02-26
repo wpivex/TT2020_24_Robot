@@ -57,15 +57,7 @@ void Drive::turnToAngle(QAngle angle, int vel, DrivePrecision precision){
     this->chassis->turnToAngle(t_d);
 }
 
-void Drive::driveDist(QLength len, int vel, DrivePrecision precision){
-    // Update desired position
-    float x_od = sin(t_d.convert(radian)); // x orientation
-    float y_od = cos(t_d.convert(radian)); // y orientation
-    x_d = x_d + (len * x_od); // Update desired x
-    y_d = y_d + (len * y_od); // Update desired y
-
-    Menu::getMenu()->addDebugPrint(3, "x_d:" + std::to_string(x_d.convert(inch))+ " y_d:" + std::to_string(y_d.convert(inch)));
-
+QLength Drive::getOrientedError(){
     // Get orientation error
     OdomState cur_state = chassis->getOdometry()->getState(okapi::StateMode::CARTESIAN);
     QLength x_e = x_d - cur_state.x; // x error
@@ -75,7 +67,29 @@ void Drive::driveDist(QLength len, int vel, DrivePrecision precision){
     float y_o = cos(cur_state.theta.convert(radian)); // y orientation
 
     QLength e_o = (x_o * x_e) + (y_o * y_e); // calc oriented error
+    return e_o;
+}
+
+void Drive::driveDist(QLength len, int vel, DrivePrecision precision){
+    // Update desired position
+    float x_od = sin(t_d.convert(radian)); // x orientation
+    float y_od = cos(t_d.convert(radian)); // y orientation
+    x_d = x_d + (len * x_od); // Update desired x
+    y_d = y_d + (len * y_od); // Update desired y
+
+    Menu::getMenu()->addDebugPrint(3, "x_d:" + std::to_string(x_d.convert(inch))+ " y_d:" + std::to_string(y_d.convert(inch)));
+
+    QLength e_o = getOrientedError();
 
     this->chassis->getModel()->setMaxVelocity(vel);
-    this->chassis->moveDistance(e_o);
+
+    if (precision == NO_PRECISION){
+        this->chassis->moveDistanceAsync(e_o);
+        while (abs(e_o.convert(inch)) > .5 and !chassisPID->isSettled()) {
+            e_o = getOrientedError();
+        }
+    }
+    else{
+        this->chassis->moveDistance(e_o);
+    }
 }

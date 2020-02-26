@@ -83,9 +83,9 @@ void autonomous() {
 
     deploy();
     intake->setIntakeMode(IM_IN_FOR_TRAY);
-    drive->driveDist(37_in, 70);
+    drive->driveDist(37_in, 70, NO_PRECISION);
     drive->turnToAngle(20_deg);
-    drive->driveDist(6_in, 90);
+    drive->driveDist(6_in, 90, NO_PRECISION);
     pros::delay(200);
 
     drive->turnToAngle(30_deg);
@@ -97,20 +97,20 @@ void autonomous() {
 
     // Get isolated
     drive->turnToAngle(48_deg,90);
-    drive->driveDist(13_in, 70);
+    drive->driveDist(13_in, 70, NO_PRECISION);
     drive->driveDist(-6_in, 110);
 
     // Get near center
     drive->turnToAngle(20_deg,90);
-    drive->driveDist(19_in, 80);
+    drive->driveDist(19_in, 80, NO_PRECISION);
     drive->driveDist(-7_in, 100);
     drive->turnToAngle(10_deg,90);
-    drive->driveDist(11_in, 100);
+    drive->driveDist(11_in, 100, NO_PRECISION);
 
     // Line up to score
     drive->driveDist(-7_in, 110);
     drive->turnToAngle(-146_deg, 120);
-    drive->driveDist(36_in, 170);
+    drive->driveDist(36_in, 170, NO_PRECISION);
 
     // Score
     score();

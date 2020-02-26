@@ -7,7 +7,7 @@ using namespace okapi;
 enum DrivePrecision{
     HIGH_PRECISION,
     MEDIUM_PRECISION,
-    WHAT_PRECISION
+    NO_PRECISION
 };
 
 class Drive {
@@ -16,8 +16,9 @@ class Drive {
 		std::shared_ptr<okapi::DefaultOdomChassisController> chassis;
 		std::shared_ptr<okapi::ChassisControllerPID> chassisPID;
 		void opControlDrive(pros::Controller& joystick);
-    void driveDist(QLength len, int vel=130, DrivePrecision precision = MEDIUM_PRECISION);
-    void turnToAngle(QAngle angle, int vel=150, DrivePrecision precision = MEDIUM_PRECISION);
+        void driveDist(QLength len, int vel=130, DrivePrecision precision = MEDIUM_PRECISION);
+        void turnToAngle(QAngle angle, int vel=150, DrivePrecision precision = MEDIUM_PRECISION);
+        QLength getOrientedError();
 
         QLength x_d;
         QLength y_d;
