@@ -15,11 +15,49 @@ using namespace okapi;
  * from where it left off.
  */
 void deploy() {
-
+    // fuck
 }
 
 void score() {
+    auto robot = HeLied::getRobot();
+    auto chassis = robot->drive->chassis;
 
+    //Starting the tray, delete this when you are done.
+    robot->intake->setIntakeMode(IM_IN_FOR_TRAY);
+    pros::delay(1000);
+
+    chassis->setMaxVelocity(100);
+    chassis->moveDistance(24_in);
+    // ram the corner
+    chassis->getModel()->forward(100);
+    pros::delay(400);
+    chassis->getModel()->stop();
+
+    //adjust
+    robot->intake->setIntakeMode(IM_SQUISH_STACK);
+    pros::delay(3000);
+    robot->intake->setIntakeMode(IM_OFF);
+
+    // tilt
+    double thresh = 0;
+    double tiltUpSetpoint = robot->tilter->FOURBAR_UP_VALUE;
+    while(robot->tilter->fourbar->getPosition()  + thresh < tiltUpSetpoint) {
+        robot->tilter->moveFourbar(200);
+    }
+    robot->tilter->moveFourbar(0);
+
+    // release
+    robot->tray->moveTraySliderVel(200);
+
+    // back up
+    robot->intake->runIntake(-42);
+    chassis->getModel()->forward(-50);
+    robot->tilter->moveFourbar(-40);
+    pros::delay(200);
+    robot->tilter->moveFourbar(0);
+    chassis->getModel()->stop();
+    robot->intake->setIntakeMode(IM_OFF);
+    
 }
 
 void autonomous() {
@@ -48,30 +86,31 @@ void autonomous() {
 
 	// Deploy tray
 	// TODO fuck
+    score();
 
 	// drive to in L
-	intake->setIntakeMode(IM_IN_FOR_TRAY);
-	drive->driveDist(24_in, 90);
-	pros::delay(500);
-    lift->moveToPos(AP_HIGH_HOVER);
-    drive->driveDist(-5_in);
-    lift->goToPos(AP_HIGH_HOVER);
-    intake->setIntakeMode(IM_OFF);
-    drive->driveDist(10_in);
-    lift->goToPos(AP_LOW_HOVER);
-    drive->driveDist(-25_in);
-    lift->goToPos(AP_DOWN);
-    intake->setIntakeMode(IM_IN_FOR_TRAY);
-    drive->driveDist(28_in, 90);
-    chassis->turnAngle(-40_deg);
-    chassis->getModel()->setMaxVelocity(150);
-    drive->driveDist(17_in);
-    pros::delay(600);
-    drive->driveDist(-10_in);
-    chassis->turnAngle(30_deg);
-    drive->driveDist(8_in);
-    pros::delay(600);
-    drive->driveDist(-10_in);
-    chassis->turnAngle(40_deg);
-    drive->driveDist(15_in);
+	// intake->setIntakeMode(IM_IN_FOR_TRAY);
+	// drive->driveDist(24_in, 90);
+	// pros::delay(500);
+    // lift->moveToPos(AP_HIGH_HOVER);
+    // drive->driveDist(-5_in);
+    // lift->goToPos(AP_HIGH_HOVER);
+    // intake->setIntakeMode(IM_OFF);
+    // drive->driveDist(10_in);
+    // lift->goToPos(AP_LOW_HOVER);
+    // drive->driveDist(-25_in);
+    // lift->goToPos(AP_DOWN);
+    // intake->setIntakeMode(IM_IN_FOR_TRAY);
+    // drive->driveDist(28_in, 90);
+    // chassis->turnAngle(-40_deg);
+    // chassis->getModel()->setMaxVelocity(150);
+    // drive->driveDist(17_in);
+    // pros::delay(600);
+    // drive->driveDist(-10_in);
+    // chassis->turnAngle(30_deg);
+    // drive->driveDist(8_in);
+    // pros::delay(600);
+    // drive->driveDist(-10_in);
+    // chassis->turnAngle(40_deg);
+    // drive->driveDist(15_in);
 }
