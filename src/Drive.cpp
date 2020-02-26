@@ -54,7 +54,20 @@ void Drive::turnToAngle(QAngle angle, int vel, DrivePrecision precision){
     t_d = angle;
 
     this->chassis->getModel()->setMaxVelocity(vel);
-    this->chassis->turnToAngle(t_d);
+
+    QAngle t_e;
+
+    if (precision == NO_PRECISION){
+        this->chassis->turnToAngle(t_d);
+        do {
+            OdomState cur_state = chassis->getOdometry()->getState(okapi::StateMode::CARTESIAN);
+            t_e = t_d - cur_state.theta;
+            pros::delay(10);
+        } while (abs(t_e.convert(degree)) > 2 and !chassisPID->isSettled());
+    }
+    else{
+        this->chassis->turnToAngle(t_d);
+    }
 }
 
 QLength Drive::getOrientedError(){
