@@ -87,6 +87,7 @@ void Drive::driveDist(QLength len, int vel, DrivePrecision precision){
         this->chassis->moveDistanceAsync(e_o);
         while (abs(e_o.convert(inch)) > .5 and !chassisPID->isSettled()) {
             e_o = getOrientedError();
+            pros::delay(10);
         }
     }
     else{
