@@ -122,12 +122,14 @@ void autonomous() {
     lift->moveToPos(AP_DOWN);
     intake->setIntakeMode(IM_IN_FOR_TRAY);
     drive->driveDist(37_in, 70);
-    chassis->turnToAngle(20_deg);
+    drive->turnToAngle(20_deg);
     drive->driveDist(6_in, 80);
     drive->driveDist(-5_in, 100);
-    chassis->turnToAngle(-42_deg);
+
+    pros::delay(100000);
 
     // Into pyramid
+    chassis->turnToAngle(-42_deg);
     drive->driveDist(15_in, 90);
     drive->driveDist(-7_in, 90);
 
