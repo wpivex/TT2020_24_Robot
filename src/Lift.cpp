@@ -32,6 +32,9 @@ bool Lift::opControl(pros::Controller& joystick, ArmMode armMode) {
 }
 
 void Lift::moveLift(int power) {
+//    if (power == 0 and armMotors->getPosition() < (int) AP_THRESH){
+//        armMotors->moveVoltage(-500);
+//    }
     armMotors->moveVelocity(power);
 }
 

@@ -81,14 +81,36 @@ void autonomous() {
 //    drive->driveDist(-2_in, 90);
 //    chassis->turnToAngle(-120_deg);
 //    drive->driveDist(8_in, 90);
-
+    lift->moveToPos(AP_DOWN);
     intake->setIntakeMode(IM_IN_FOR_TRAY);
-    drive->driveDist(38_in, 70);
+    drive->driveDist(37_in, 70);
+    chassis->turnToAngle(20_deg);
+    drive->driveDist(6_in, 80);
+    drive->driveDist(-5_in, 100);
     chassis->turnToAngle(-42_deg);
-    drive->driveDist(15_in, 50);
-    drive->driveDist(-5_in, 90);
-    chassis->turnToAngle(90_deg);
-    drive->driveDist(20_in, 70);
-    chassis->turnToAngle(70_deg);
-    drive->driveDist(8_in, 70);
+
+    // Into pyramid
+    drive->driveDist(15_in, 90);
+    drive->driveDist(-7_in, 90);
+
+    // Cross corner
+    chassis->turnToAngle(95_deg);
+    drive->driveDist(26_in, 70);
+
+    // Get near center goal
+    drive->driveDist(-3_in, 130);
+    chassis->turnToAngle(60_deg);
+    drive->driveDist(11_in, 70);
+    drive->driveDist(-9_in, 70);
+    chassis->turnToAngle(40_deg);
+    drive->driveDist(9_in, 70);
+
+    // Get near close goal
+    drive->driveDist(-18_in, 110);
+    chassis->turnToAngle(130_deg);
+    drive->driveDist(9_in, 70);
+
+    // Line up to score
+    drive->driveDist(-11_in, 110);
+    chassis->turnToAngle(220_deg);
 }
