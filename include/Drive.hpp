@@ -23,6 +23,8 @@ class Drive {
         QLength x_d;
         QLength y_d;
         QAngle t_d;
+        // true for red, false for blue
+        bool turnsMirrored = false;
 
 	private:
 		std::shared_ptr<MotorGroup> leftMotors;

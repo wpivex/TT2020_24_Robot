@@ -18,9 +18,9 @@ void deploy() {
 
     auto robot = HeLied::getRobot();
 
-    robot->intake->setIntakeMode(IM_OUT_FOR_TOWER);
+    // robot->intake->setIntakeMode(IM_OUT_FOR_TOWER);
     robot->lift->goToPos(AP_HIGH_TOWER);
-    robot->intake->setIntakeMode(IM_OUT_FOR_TOWER);
+    // robot->intake->setIntakeMode(IM_OUT_FOR_TOWER);
     robot->lift->homeArm();
 }
 
@@ -73,13 +73,7 @@ void autonomous() {
     std::shared_ptr<Lift> lift = robot->lift;
     std::shared_ptr<Intake> intake = robot->intake;
 
-	#ifdef BLUE
-	chassis->setTurnsMirrored(false);
-	#endif
 
-	#ifdef RED
-	chassis->setTurnsMirrored(true);
-    #endif
 
     deploy();
     intake->setIntakeMode(IM_IN_FOR_TRAY);

@@ -1,5 +1,6 @@
 #include "Menu.hpp"
 #include "Orange.h"
+#include "HeLied.hpp"
 
 Menu *Menu::menu = NULL;
 Menu *Menu::getMenu() {
@@ -18,12 +19,12 @@ Menu::Menu() : terminalOutput(), debugOutput(10, "") {
 
     lv_obj_t *label = lv_label_create(tabInfo, NULL);
     lv_label_set_text(label, "help");
-    #ifdef BLUE
-    lv_label_set_text(label, "You are on blue.");
-    #endif
-    #ifdef RED
-    lv_label_set_text(label, "You are on red.");
-    #endif
+    if(HeLied::getRobot()->drive->turnsMirrored) {
+        lv_label_set_text(label, "You are on red.");
+
+    } else {
+        lv_label_set_text(label, "You are on blue.");
+    }
 }
 
 void Menu::printTerminal(const std::string str) {
