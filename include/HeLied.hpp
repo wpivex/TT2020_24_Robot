@@ -21,7 +21,7 @@ using namespace okapi;
 #define DRIVE_RIGHT_BACK 1
 
 #define INTAKE_LEFT 20
-#define INTAKE_RIGHT 11
+#define INTAKE_RIGHT 5
 #define INTAKE_BACK_LEFT 10
 #define INTAKE_BACK_RIGHT 16
 

@@ -29,12 +29,12 @@ void score() {
     auto chassis = robot->drive->chassis;
     // ram the corner
     chassis->getModel()->forward(100);
-    pros::delay(900);
+    pros::delay(1300);
     chassis->getModel()->stop();
 
     //adjust
     robot->intake->setIntakeMode(IM_SQUISH_STACK);
-    pros::delay(3000);
+    pros::delay(4000);
     robot->intake->setIntakeMode(IM_OFF);
 
     // tilt
@@ -76,14 +76,16 @@ void autonomous() {
 
 
     deploy();
+    lift->moveLift(-1000);
+
     intake->setIntakeMode(IM_IN_FOR_TRAY);
     drive->driveDist(37_in, 70, NO_PRECISION);
     drive->turnToAngle(20_deg);
     drive->driveDist(6_in, 90, NO_PRECISION);
     pros::delay(200);
 
-    drive->turnToAngle(30_deg);
-    drive->driveDist(4_in, 90);
+    drive->turnToAngle(30_deg, 100);
+    drive->driveDist(4.5_in, 90);
     intake->setIntakeMode(IM_OFF);
     drive->turnToAngle(145_deg,60);
     intake->setIntakeMode(IM_IN_FOR_TRAY);
@@ -91,21 +93,22 @@ void autonomous() {
 
     // Get isolated
     drive->turnToAngle(48_deg,90);
-    drive->driveDist(13_in, 70, NO_PRECISION);
-    drive->driveDist(-6_in, 110);
+    drive->driveDist(17_in, 70, NO_PRECISION);
+    drive->driveDist(-9_in, 110);
 
     // Get near center
-    drive->turnToAngle(20_deg,90);
-    drive->driveDist(19_in, 80, NO_PRECISION);
+    drive->turnToAngle(18_deg,90);
+    drive->driveDist(19_in, 70, NO_PRECISION);
     drive->driveDist(-7_in, 100);
-    drive->turnToAngle(10_deg,90);
-    drive->driveDist(11_in, 100, NO_PRECISION);
+    drive->turnToAngle(6_deg,90);
+    drive->driveDist(12_in, 100, NO_PRECISION);
 
     // Line up to score
-    drive->driveDist(-7_in, 110);
-    drive->turnToAngle(-146_deg, 120);
-    drive->driveDist(36_in, 170, NO_PRECISION);
+    drive->driveDist(-8_in, 110);
+    drive->turnToAngle(-146_deg, 90);
+    drive->driveDist(38_in, 190, NO_PRECISION);
+    lift->moveLift(-1000);
 
     // Score
-    score();
+    // score();
 }

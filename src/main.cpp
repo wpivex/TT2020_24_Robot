@@ -47,6 +47,7 @@ void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	auto menu = Menu::getMenu();
 	auto robot = HeLied::getRobot();
+	robot->drive->chassis->stop();
 
 	while (true) {
 		robot->opControl(master);

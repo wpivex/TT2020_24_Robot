@@ -51,23 +51,23 @@ void Drive::opControlDrive(pros::Controller& joystick) {
 
 void Drive::turnToAngle(QAngle angle, int vel, DrivePrecision precision){
     // Update desired
-    t_d = angle;
     int turnsModifier = this->turnsMirrored ? -1 : 1;
+    t_d = angle * turnsModifier;
 
     this->chassis->getModel()->setMaxVelocity(vel);
 
     QAngle t_e;
 
     if (precision == NO_PRECISION){
-        this->chassis->turnToAngle(t_d * turnsModifier);
+        this->chassis->turnToAngle(t_d);
         do {
             OdomState cur_state = chassis->getOdometry()->getState(okapi::StateMode::CARTESIAN);
             t_e = t_d - cur_state.theta;
             pros::delay(10);
-        } while (abs(t_e.convert(degree)) > 2 and !chassisPID->isSettled());
+        } while (abs(t_e.convert(degree)) > 2 && !chassisPID->isSettled());
     }
     else{
-        this->chassis->turnToAngle(t_d * turnsModifier);
+        this->chassis->turnToAngle(t_d);
     }
 }
 
@@ -99,10 +99,11 @@ void Drive::driveDist(QLength len, int vel, DrivePrecision precision){
 
     if (precision == NO_PRECISION){
         this->chassis->moveDistanceAsync(e_o);
-        while (abs(e_o.convert(inch)) > .5 and !chassisPID->isSettled()) {
+        while (abs(e_o.convert(inch)) > .5 && !chassisPID->isSettled()) {
             e_o = getOrientedError();
             pros::delay(10);
         }
+        chassis->stop();
     }
     else{
         this->chassis->moveDistance(e_o);

@@ -19,16 +19,18 @@ bool Lift::opControl(pros::Controller& joystick, ArmMode armMode) {
         down |= joystick.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
     }
 
+    bool isUp = armMotors->getPosition() > (int) AP_THRESH;
+
     if(up) {
         moveLift(100);
     } else if(down) {
         moveLift(-100);
     } else {
-        moveLift(0);
+        moveLift(-500 * (!isUp));
     }
     Menu::getMenu()->addDebugPrint(6, "Arm Pos:" + std::to_string(armMotors->getPosition()));
 
-    return armMotors->getPosition() > (int) AP_THRESH;
+    return isUp;
 }
 
 void Lift::moveLift(int power) {

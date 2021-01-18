@@ -11,7 +11,7 @@ enum ArmPosition{
     AP_HIGH_HOVER = 220,
     AP_LOW_TOWER = 380,
     AP_MEDIUM_TOWER = 480,
-    AP_HIGH_TOWER = 750
+    AP_HIGH_TOWER = 790
 };
 
 
